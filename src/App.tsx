@@ -40,9 +40,13 @@ function App() {
         <Route path="/" element={
           <div className="landing-page">
             <div className="logo-container">
-              <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" onError={() => setError('Failed to load Bitcoin logo')} />
+              <a href="https://bitcoin.org" target="_blank" rel="noopener noreferrer">
+                <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" onError={() => setError('Failed to load Bitcoin logo')} />
+              </a>
               <span className="logo-plus">+</span>
-              <img src={eulerLogo} className="logo" alt="Euler logo" onError={() => setError('Failed to load Euler logo')} />
+              <a href="http://euler.finance/" target="_blank" rel="noopener noreferrer">
+                <img src={eulerLogo} className="logo" alt="Euler logo" onError={() => setError('Failed to load Euler logo')} />
+              </a>
             </div>
             <h1>Welcome to ₿earn</h1>
             <Link to="/points" className="start-button">

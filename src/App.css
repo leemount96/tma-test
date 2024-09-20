@@ -49,6 +49,8 @@ a:hover {
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
+  padding: 1.5em; /* Increased padding */
+  overflow: visible; /* Ensure the overflow is visible */
 }
 
 .landing-page .logo {
@@ -194,4 +196,52 @@ h1 {
   to {
     transform: scale(1.05);
   }
+}
+
+.barrel-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f7931a;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  font-weight: bold;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  animation: float 2s ease-in-out infinite;
+  pointer-events: none; /* Prevent tooltip from interfering with clicks */
+}
+
+.tooltip.show {
+  opacity: 1;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #f7931a transparent transparent transparent;
+}
+
+/* Remove this rule as we no longer need hover functionality */
+/* .barrel-container:hover .tooltip {
+  opacity: 1;
+} */
+
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0px); }
+  50% { transform: translateX(-50%) translateY(-5px); }
 }

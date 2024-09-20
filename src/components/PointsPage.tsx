@@ -4,15 +4,29 @@ import bitcoinLogo from '../assets/bitcoin.png'
 import eulerLogo from '../assets/euler.png'
 import oilBarrel from '../assets/oil.png'
 
+function Tooltip({ show }: { show: boolean }) {
+  return (
+    <div className={`tooltip ${show ? 'show' : ''}`}>
+      Tap the barrel to start ₿earning points!
+    </div>
+  )
+}
+
 function PointsPage() {
   const [count, setCount] = useState(0)
+  const [showTooltip, setShowTooltip] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const barrelRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
+    const tooltipTimer = setTimeout(() => {
+      setShowTooltip(true)
+    }, 2000) // Show tooltip after 2 seconds
+
     const cleanup = () => {
       const floatingBitcoins = document.querySelectorAll('.floating-bitcoin')
       floatingBitcoins.forEach(bitcoin => bitcoin.remove())
+      clearTimeout(tooltipTimer)
     }
 
     return cleanup
@@ -44,6 +58,7 @@ function PointsPage() {
 
   const incrementCount = () => {
     setCount((prevCount) => prevCount + 1)
+    setShowTooltip(false) // Hide tooltip when barrel is clicked
     const numBitcoins = 15
     
     if (containerRef.current && barrelRef.current) {
@@ -77,13 +92,16 @@ function PointsPage() {
         </a>
       </div>
       <div className="card">
-        <img 
-          ref={barrelRef}
-          src={oilBarrel} 
-          alt="Oil Barrel" 
-          className="oil-barrel" 
-          onClick={incrementCount}
-        />
+        <div className="barrel-container">
+          <img 
+            ref={barrelRef}
+            src={oilBarrel} 
+            alt="Oil Barrel" 
+            className="oil-barrel" 
+            onClick={incrementCount}
+          />
+          <Tooltip show={showTooltip} />
+        </div>
         <div className="points-display">
           <span className="points-label">₿earn points:</span>
           <span className="points-value">{count}</span>
