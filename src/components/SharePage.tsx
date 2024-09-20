@@ -22,7 +22,7 @@ function SharePage() {
     }
     
     // Generate a referral link using the user's ID
-    const baseUrl = 'https://t.me/tma_test_test_bot'; // Replace with your bot's username
+    const baseUrl = 'https://t.me/Bearn_Bot'; // Replace with your bot's username
     const generatedLink = `${baseUrl}?start=ref_${userId}`;
     setReferralLink(generatedLink);
   }, []);
