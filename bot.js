@@ -3,6 +3,7 @@ const { Telegraf } = require('telegraf');
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.command('start', (ctx) => {
+  console.log('Received start command');
   const startPayload = ctx.message.text.split(' ')[1];
   let message = 'Welcome to ₿earn!';
   
@@ -21,8 +22,15 @@ bot.command('start', (ctx) => {
   });
 });
 
+// Add a catch-all handler
+bot.on('message', (ctx) => {
+  console.log('Received message:', ctx.message);
+  ctx.reply('I received your message!');
+});
+
 // This is the Vercel serverless function handler
 module.exports = async (req, res) => {
+  console.log('Received update:', req.body);
   try {
     await bot.handleUpdate(req.body);
     res.status(200).end();
