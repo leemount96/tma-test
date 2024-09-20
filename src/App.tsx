@@ -1,55 +1,26 @@
-import { HashRouter as Router, Route, Routes, Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import bitcoinLogo from './assets/bitcoin.png'
-import eulerLogo from './assets/euler.png'
-import PointsPage from './components/PointsPage'
-import './App.css'
-import WebApp from '@twa-dev/sdk'
+import React, { useEffect, useState } from 'react';
+import WebApp from '@twa-dev/sdk';
 
 function App() {
-  const [error, setError] = useState<string | null>(null);
-  const [isWebAppReady, setIsWebAppReady] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    try {
-      console.log('App mounted, initializing WebApp...');
-      WebApp.ready();
-      setIsWebAppReady(true);
-      console.log('WebApp ready called in App');
-    } catch (e) {
-      console.error('Error in App useEffect:', e);
-      setError(`Failed to initialize WebApp: ${e}`);
-    }
+    WebApp.ready();
+    setIsReady(true);
   }, []);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!isWebAppReady) {
+  if (!isReady) {
     return <div>Loading...</div>;
   }
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={
-          <div className="landing-page">
-            <div className="logo-container">
-              <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" onError={() => console.error('Failed to load Bitcoin logo')} />
-              <span className="logo-plus">+</span>
-              <img src={eulerLogo} className="logo" alt="Euler logo" onError={() => console.error('Failed to load Euler logo')} />
-            </div>
-            <h1>Welcome to ₿earn</h1>
-            <Link to="/points" className="start-button">
-              Start to ₿earn Points
-            </Link>
-          </div>
-        } />
-        <Route path="/points" element={<PointsPage />} />
-      </Routes>
-    </Router>
-  )
+    <div>
+      <h1>Welcome to ₿earn</h1>
+      <button onClick={() => WebApp.showAlert('Hello from ₿earn!')}>
+        Click me
+      </button>
+    </div>
+  );
 }
 
-export default App
+export default App;

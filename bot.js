@@ -12,14 +12,7 @@ bot.command('start', (ctx) => {
   });
 });
 
-// This handler is necessary for Vercel serverless function
 module.exports = async (req, res) => {
-  const { token } = req.query;
-
-  if (token !== process.env.BOT_TOKEN) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
   try {
     await bot.handleUpdate(req.body);
     res.status(200).end();
@@ -28,6 +21,3 @@ module.exports = async (req, res) => {
     res.status(500).end();
   }
 };
-
-// If you want to test the bot locally, uncomment this:
-// bot.launch();
