@@ -8,11 +8,21 @@ import './App.css';
 
 function App() {
   const [isReady, setIsReady] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    WebApp.ready();
-    setIsReady(true);
+    try {
+      WebApp.ready();
+      setIsReady(true);
+    } catch (err) {
+      console.error('Error initializing WebApp:', err);
+      setError('Failed to initialize WebApp');
+    }
   }, []);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   if (!isReady) {
     return <div>Loading...</div>;
@@ -24,9 +34,9 @@ function App() {
         <Route path="/" element={
           <div className="landing-page">
             <div className="logo-container">
-              <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
+              <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" onError={() => setError('Failed to load Bitcoin logo')} />
               <span className="logo-plus">+</span>
-              <img src={eulerLogo} className="logo" alt="Euler logo" />
+              <img src={eulerLogo} className="logo" alt="Euler logo" onError={() => setError('Failed to load Euler logo')} />
             </div>
             <h1>Welcome to ₿earn</h1>
             <Link to="/points" className="start-button">

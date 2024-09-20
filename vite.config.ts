@@ -6,6 +6,13 @@ export default defineConfig({
   build: {
     outDir: './docs',
     sourcemap: true,
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
   },
   base: './',
+  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.svg'],
 });
