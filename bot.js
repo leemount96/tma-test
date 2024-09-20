@@ -31,6 +31,14 @@ bot.on('message', (ctx) => {
 // This is the Vercel serverless function handler
 module.exports = async (req, res) => {
   console.log('Received update:', req.body);
+  
+  // Check if the request includes a valid bot token
+  const secretToken = req.query.token;
+  if (secretToken !== process.env.BOT_TOKEN) {
+    console.error('Unauthorized request');
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
   try {
     await bot.handleUpdate(req.body);
     res.status(200).end();

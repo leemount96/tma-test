@@ -10,6 +10,13 @@ import './App.css';
 
 function NavBar() {
   const location = useLocation();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const paths = ['/', '/points', '/bearn', '/share'];
+    const index = paths.indexOf(location.pathname);
+    setActiveIndex(index !== -1 ? index : 0);
+  }, [location]);
 
   return (
     <nav className="bottom-nav">
@@ -17,6 +24,7 @@ function NavBar() {
       <Link to="/points" className={location.pathname === '/points' ? 'active' : ''}>Points</Link>
       <Link to="/bearn" className={location.pathname === '/bearn' ? 'active' : ''}>Bearn</Link>
       <Link to="/share" className={location.pathname === '/share' ? 'active' : ''}>Share</Link>
+      <div className="nav-indicator" style={{ left: `${activeIndex * 25}%` }}></div>
     </nav>
   );
 }
@@ -24,7 +32,7 @@ function NavBar() {
 function HomePage() {
   return (
     <div className="page-container home-page">
-      <div className="home-content">
+      <div className="page-content">
         <div className="logo-container">
           <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
           <span className="logo-plus">+</span>

@@ -28,15 +28,16 @@ body, html {
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  padding-bottom: 60px; /* For the navigation bar */
+  padding-bottom: 70px; /* Increased from 60px to accommodate taller nav bar */
 }
 
 .page-content {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; /* This will center the content vertically */
   align-items: center;
+  padding: 2rem 1rem; /* Add some padding to prevent content from touching the edges */
 }
 
 .logo-container {
@@ -140,20 +141,33 @@ h1 {
   bottom: 0;
   left: 0;
   right: 0;
+  height: 60px;
+  overflow: hidden; /* To hide the overflowing part of the indicator */
 }
 
 .bottom-nav a {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  padding: 10px 0;
+  padding: 15px 0;
   flex: 1;
   text-align: center;
-  transition: background-color 0.3s;
+  transition: color 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .bottom-nav a.active {
-  background-color: #e67e00;
+  color: #ffffff;
+}
+
+.nav-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 4px;
+  width: 25%;
+  background-color: #ffffff;
+  transition: left 0.3s ease;
 }
 
 /* ... (rest of the styles remain unchanged) ... */

@@ -73,7 +73,7 @@ function PointsPage() {
   }
 
   return (
-    <div className="page-container" ref={containerRef}>
+    <div className="page-container">
       <div className="logo-container">
         <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
         <span className="logo-plus">+</span>
