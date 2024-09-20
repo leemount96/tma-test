@@ -15,59 +15,44 @@ body, html {
   overflow: hidden;
 }
 
-.logo {
-  height: 4em;
-  padding: 0.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #f7931aaa);
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-/* Update link styles */
-a {
-  font-weight: 500;
-  color: #f7931a;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #f7931a;
-}
-
-/* Landing page styles */
-.landing-page {
+.app-container {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+.landing-page, .points-page, .bearn-page, .share-page {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  height: 100%;
-  padding: 1rem;
+  padding: 2rem 1rem 60px; /* Add padding-bottom for the navigation bar */
   box-sizing: border-box;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .logo-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
-.landing-page .logo {
-  height: 6em;  /* Increased size for main page logos */
+.logo {
+  height: 6em;
   padding: 0.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #f7931aaa);
 }
 
 .logo-plus {
-  font-size: 3em;  /* Increased size to match larger logos */
+  font-size: 3em;
   margin: 0 0.5em;
   color: #f7931a;
 }
@@ -87,42 +72,10 @@ h1 {
   border-radius: 8px;
   text-decoration: none;
   transition: background-color 0.3s ease;
-  margin-top: 2rem;
 }
 
 .start-button:hover {
   background-color: #e67e00;
-}
-
-/* Points page styles */
-.points-page {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  width: 100%;
-  padding: 1rem;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.logo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 2rem;
-}
-
-.card {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
 }
 
 .barrel-container {
@@ -150,6 +103,7 @@ h1 {
   font-size: 1.5em;
   font-weight: bold;
   color: #f7931a;
+  margin-bottom: 2rem;
 }
 
 .points-label {
@@ -160,149 +114,11 @@ h1 {
   color: #e67e00;
 }
 
-/* Back button styles */
-.back-button {
-  display: inline-block;
-  padding: 0.5em 1em;
-  margin-top: 1rem;
-  font-size: 1em;
-  font-weight: 500;
-  color: #ffffff;
-  background-color: #f7931a;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-}
-
-.back-button:hover {
-  background-color: #e67e00;
-}
-
-/* Update text color for light mode */
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #f7931a;
-  }
-}
-
-@keyframes explode {
-  0% {
-    transform: translate(0, 0) scale(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(
-      calc(var(--end-x) - var(--start-x)),
-      calc(var(--end-y) - var(--start-y))
-    ) scale(1);
-    opacity: 0;
-  }
-}
-
-.floating-bitcoin {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  pointer-events: none;
-  animation: explode 1s ease-out forwards;
-  z-index: 10;
-}
-
-.points-label {
-  margin-right: 0.5rem;
-}
-
-.points-value {
-  font-size: 1.2em;
-  color: #e67e00;
-}
-
-@keyframes pulse {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.05);
-  }
-}
-
-.barrel-container {
-  position: relative;
-  display: inline-block;
-}
-
-.tooltip {
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #f7931a;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 20px;
-  font-size: 0.9em;
-  font-weight: bold;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  animation: float 2s ease-in-out infinite;
-  pointer-events: none; /* Prevent tooltip from interfering with clicks */
-}
-
-.tooltip.show {
-  opacity: 1;
-}
-
-.tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -10px;
-  border-width: 10px;
-  border-style: solid;
-  border-color: #f7931a transparent transparent transparent;
-}
-
-/* Remove this rule as we no longer need hover functionality */
-/* .barrel-container:hover .tooltip {
-  opacity: 1;
-} */
-
-@keyframes float {
-  0%, 100% { transform: translateX(-50%) translateY(0px); }
-  50% { transform: translateX(-50%) translateY(-5px); }
-}
-
-/* Adjust sizes to fit smaller screens */
-@media (max-height: 600px) {
-  .logo {
-    height: 3em;
-  }
-  
-  h1 {
-    font-size: 1.8em;
-    margin-bottom: 1rem;
-  }
-  
-  .start-button {
-    padding: 0.6em 1.2em;
-    font-size: 1em;
-  }
-  
-  .oil-barrel {
-    width: 100px;
-  }
-}
-
-.app-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.coming-soon {
+  font-size: 2em;
+  color: #f7931a;
+  text-align: center;
+  margin-top: 2rem;
 }
 
 .bottom-nav {
@@ -331,20 +147,4 @@ h1 {
   background-color: #e67e00;
 }
 
-.landing-page, .points-page, .bearn-page, .share-page {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 60px; /* Add space for the navigation bar */
-}
-
-.coming-soon {
-  font-size: 2em;
-  color: #f7931a;
-  text-align: center;
-  margin-top: 20px;
-}
-
-/* ... (rest of the styles remain) ... */
+/* ... (rest of the styles remain unchanged) ... */
