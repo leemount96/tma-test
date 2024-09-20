@@ -21,6 +21,7 @@ bot.command('start', (ctx) => {
   });
 });
 
+// This is the Vercel serverless function handler
 module.exports = async (req, res) => {
   try {
     await bot.handleUpdate(req.body);
