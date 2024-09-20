@@ -84,7 +84,10 @@ function PointsPage() {
           className="oil-barrel" 
           onClick={incrementCount}
         />
-        <p>₿earn points: {count}</p>
+        <div className="points-display">
+          <span className="points-label">₿earn points:</span>
+          <span className="points-value">{count}</span>
+        </div>
       </div>
       <Link to="/" className="back-button">
         Back to Home
