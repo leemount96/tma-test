@@ -1,16 +1,11 @@
 {
   "version": 2,
   "builds": [
-    { "src": "bot.js", "use": "@vercel/node" }
+    { "src": "bot.js", "use": "@vercel/node" },
+    { "src": "package.json", "use": "@vercel/static-build", "config": { "distDir": "docs" } }
   ],
   "routes": [
-    {
-      "src": "/api/bot",
-      "dest": "/bot.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    { "src": "/api/bot", "dest": "/bot.js" },
+    { "src": "/(.*)", "dest": "/$1" }
   ]
 }
