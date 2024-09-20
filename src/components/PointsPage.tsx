@@ -14,22 +14,19 @@ function Tooltip({ show }: { show: boolean }) {
 function PointsPage() {
   const [count, setCount] = useState(0)
   const [showTooltip, setShowTooltip] = useState(false)
+  const [hasClicked, setHasClicked] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const barrelRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
-    const tooltipTimer = setTimeout(() => {
-      setShowTooltip(true)
-    }, 2000) // Show tooltip after 2 seconds
+    if (!hasClicked) {
+      const tooltipTimer = setTimeout(() => {
+        setShowTooltip(true)
+      }, 2000) // Show tooltip after 2 seconds if user hasn't clicked
 
-    const cleanup = () => {
-      const floatingBitcoins = document.querySelectorAll('.floating-bitcoin')
-      floatingBitcoins.forEach(bitcoin => bitcoin.remove())
-      clearTimeout(tooltipTimer)
+      return () => clearTimeout(tooltipTimer)
     }
-
-    return cleanup
-  }, [])
+  }, [hasClicked])
 
   const createFloatingBitcoin = (startX: number, startY: number, angle: number) => {
     if (!containerRef.current) return
@@ -42,6 +39,8 @@ function PointsPage() {
     const endX = startX + Math.cos(angle) * distance
     const endY = startY + Math.sin(angle) * distance
 
+    bitcoin.style.left = `${startX}px`
+    bitcoin.style.top = `${startY}px`
     bitcoin.style.setProperty('--start-x', `${startX}px`)
     bitcoin.style.setProperty('--start-y', `${startY}px`)
     bitcoin.style.setProperty('--end-x', `${endX}px`)
@@ -55,6 +54,7 @@ function PointsPage() {
   const incrementCount = () => {
     setCount((prevCount) => prevCount + 1)
     setShowTooltip(false) // Hide tooltip when barrel is clicked
+    setHasClicked(true) // Mark that the user has clicked
     const numBitcoins = 15
     
     if (containerRef.current && barrelRef.current) {
@@ -79,19 +79,21 @@ function PointsPage() {
         <span className="logo-plus">+</span>
         <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
-      <div className="barrel-container">
-        <img 
-          ref={barrelRef}
-          src={oilBarrel} 
-          alt="Oil Barrel" 
-          className="oil-barrel" 
-          onClick={incrementCount}
-        />
-        <Tooltip show={showTooltip} />
-      </div>
-      <div className="points-display">
-        <span className="points-label">Points:</span>
-        <span className="points-value">{count}</span>
+      <div className="page-content">
+        <div className="barrel-container">
+          <img 
+            ref={barrelRef}
+            src={oilBarrel} 
+            alt="Oil Barrel" 
+            className="oil-barrel" 
+            onClick={incrementCount}
+          />
+          <Tooltip show={showTooltip} />
+        </div>
+        <div className="points-display">
+          <span className="points-label">Points:</span>
+          <span className="points-value">{count}</span>
+        </div>
       </div>
     </div>
   )

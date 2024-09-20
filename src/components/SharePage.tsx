@@ -9,7 +9,9 @@ function SharePage() {
         <span className="logo-plus">+</span>
         <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
-      <h2 className="coming-soon">Coming Soon!</h2>
+      <div className="page-content">
+        <h2 className="coming-soon">Coming Soon!</h2>
+      </div>
     </div>
   );
 }
