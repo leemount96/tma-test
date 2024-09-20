@@ -5,6 +5,7 @@ import eulerLogo from '../assets/euler.png';
 
 function SharePage() {
   const [referralLink, setReferralLink] = useState('');
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     const initData = WebApp.initData;
@@ -29,7 +30,8 @@ function SharePage() {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(referralLink).then(() => {
-      WebApp.showAlert('Referral link copied to clipboard!');
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
     }, (err) => {
       console.error('Could not copy text: ', err);
       WebApp.showAlert('Failed to copy referral link.');
@@ -48,7 +50,12 @@ function SharePage() {
         <p>Share your referral link with friends:</p>
         <div className="referral-link">
           <input type="text" value={referralLink} readOnly />
-          <button onClick={copyToClipboard}>Copy</button>
+          <button 
+            onClick={copyToClipboard}
+            className={isCopied ? 'copied' : ''}
+          >
+            {isCopied ? 'Copied!' : 'Copy'}
+          </button>
         </div>
       </div>
     </div>
