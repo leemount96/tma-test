@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import bitcoinLogo from './assets/bitcoin.png'
+import eulerLogo from './assets/euler.png'
+import oilBarrel from './assets/oil.png'
 import './App.css'
 
 import WebApp from '@twa-dev/sdk'
@@ -8,27 +9,30 @@ import WebApp from '@twa-dev/sdk'
 function App() {
   const [count, setCount] = useState(0)
 
+  const incrementCount = () => {
+    setCount((prevCount) => prevCount + 1)
+    WebApp.showAlert(`Barrel clicked! Count is now ${count + 1}`)
+  }
+
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+        <a href="https://bitcoin.org" target="_blank">
+          <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+        <a href="https://en.wikipedia.org/wiki/Leonhard_Euler" target="_blank">
+          <img src={eulerLogo} className="logo" alt="Euler logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Welcome to ₿earn</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-        {/* Here we add our button with alert callback */}
-      <div className="card">
-        <button onClick={() => WebApp.showAlert(`Hello World! Current count is ${count}`)}>
-            Show Alert
-        </button>
+        <img 
+          src={oilBarrel} 
+          alt="Oil Barrel" 
+          className="oil-barrel" 
+          onClick={incrementCount}
+        />
+        <p>₿earn points: {count}</p>
       </div>
     </>
   )
