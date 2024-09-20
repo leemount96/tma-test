@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
+import { HashRouter as Router, Route, Routes, Link } from 'react-router-dom'
 import bitcoinLogo from './assets/bitcoin.png'
 import eulerLogo from './assets/euler.png'
 import PointsPage from './components/PointsPage'

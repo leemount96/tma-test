@@ -18,7 +18,7 @@ function PointsPage() {
     return cleanup
   }, [])
 
-  const createFloatingBitcoin = (x: number, y: number) => {
+  const createFloatingBitcoin = () => {
     if (!containerRef.current || !barrelRef.current) return
 
     const bitcoin = document.createElement('img')
@@ -50,7 +50,7 @@ function PointsPage() {
   const incrementCount = () => {
     setCount((prevCount) => prevCount + 1)
     for (let i = 0; i < 15; i++) {
-      setTimeout(() => createFloatingBitcoin(0, 0), i * 50)
+      setTimeout(() => createFloatingBitcoin(), i * 50)
     }
   }
 

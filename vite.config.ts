@@ -6,5 +6,5 @@ export default defineConfig({
   build: {
     outDir: './docs'
   },
-  base: './'
+  base: '/tma-test/', // Add this line
 });
