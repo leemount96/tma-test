@@ -144,17 +144,13 @@ h1 {
   }
 }
 
-@keyframes floatAway {
+@keyframes explode {
   0% {
     transform: translate(0, 0) scale(0);
-    opacity: 0;
-  }
-  10% {
-    transform: translate(0, 0) scale(1);
     opacity: 1;
   }
   100% {
-    transform: translate(calc(var(--end-x) - var(--start-x)), calc(var(--end-y) - var(--start-y))) scale(0.5);
+    transform: translate(calc(var(--end-x) - var(--start-x)), calc(var(--end-y) - var(--start-y))) scale(1);
     opacity: 0;
   }
 }
@@ -164,5 +160,5 @@ h1 {
   width: 20px;
   height: 20px;
   pointer-events: none;
-  animation: floatAway 1s ease-out forwards;
+  animation: explode 1s ease-out forwards;
 }

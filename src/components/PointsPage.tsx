@@ -7,7 +7,6 @@ import oilBarrel from '../assets/oil.png'
 function PointsPage() {
   const [count, setCount] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
-  const barrelRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
     const cleanup = () => {
@@ -18,27 +17,27 @@ function PointsPage() {
     return cleanup
   }, [])
 
-  const createFloatingBitcoin = () => {
-    if (!containerRef.current || !barrelRef.current) return
+  const createFloatingBitcoin = (x: number, y: number, angle: number) => {
+    if (!containerRef.current) return
 
     const bitcoin = document.createElement('img')
     bitcoin.src = bitcoinLogo
     bitcoin.className = 'floating-bitcoin'
     
     const containerRect = containerRef.current.getBoundingClientRect()
-    const barrelRect = barrelRef.current.getBoundingClientRect()
 
-    const startX = barrelRect.left - containerRect.left + barrelRect.width / 2
-    const startY = barrelRect.top - containerRect.top + barrelRect.height / 2
+    const startX = x - containerRect.left
+    const startY = y - containerRect.top
 
     bitcoin.style.left = `${startX}px`
     bitcoin.style.top = `${startY}px`
 
-    const angle = Math.random() * Math.PI * 2
     const distance = 50 + Math.random() * 100
     const endX = startX + Math.cos(angle) * distance
     const endY = startY + Math.sin(angle) * distance
 
+    bitcoin.style.setProperty('--start-x', `${startX}px`)
+    bitcoin.style.setProperty('--start-y', `${startY}px`)
     bitcoin.style.setProperty('--end-x', `${endX}px`)
     bitcoin.style.setProperty('--end-y', `${endY}px`)
 
@@ -47,10 +46,14 @@ function PointsPage() {
     setTimeout(() => bitcoin.remove(), 1000)
   }
 
-  const incrementCount = () => {
+  const incrementCount = (e: React.MouseEvent<HTMLImageElement>) => {
     setCount((prevCount) => prevCount + 1)
-    for (let i = 0; i < 15; i++) {
-      setTimeout(() => createFloatingBitcoin(), i * 50)
+    const numBitcoins = 15
+    const clickX = e.clientX
+    const clickY = e.clientY
+    for (let i = 0; i < numBitcoins; i++) {
+      const angle = (i / numBitcoins) * Math.PI * 2
+      createFloatingBitcoin(clickX, clickY, angle)
     }
   }
 
@@ -67,7 +70,6 @@ function PointsPage() {
       </div>
       <div className="card">
         <img 
-          ref={barrelRef}
           src={oilBarrel} 
           alt="Oil Barrel" 
           className="oil-barrel" 
