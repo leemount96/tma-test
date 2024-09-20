@@ -1,12 +1,34 @@
 import { HashRouter as Router, Route, Routes, Link } from 'react-router-dom'
+import { useEffect } from 'react'
 import bitcoinLogo from './assets/bitcoin.png'
 import eulerLogo from './assets/euler.png'
 import PointsPage from './components/PointsPage'
 import './App.css'
+import WebApp from '@twa-dev/sdk'
 
 function App() {
+  useEffect(() => {
+    try {
+      WebApp.ready();
+      console.log('WebApp ready');
+    } catch (error) {
+      console.error('Error initializing WebApp:', error);
+    }
+  }, []);
+
+  const checkWebApp = () => {
+    try {
+      WebApp.showAlert('WebApp is working!');
+    } catch (error) {
+      console.error('Error calling WebApp method:', error);
+    }
+  }
+
   return (
     <Router>
+      <button onClick={checkWebApp} style={{position: 'fixed', top: 10, right: 10, zIndex: 9999}}>
+        Check WebApp
+      </button>
       <Routes>
         <Route path="/" element={
           <div className="landing-page">

@@ -4,7 +4,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: './docs'
+    outDir: './docs',
+    sourcemap: true,
   },
   base: '/tma-test/', // Add this line
 });
