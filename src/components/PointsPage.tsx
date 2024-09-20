@@ -7,6 +7,7 @@ import oilBarrel from '../assets/oil.png'
 function PointsPage() {
   const [count, setCount] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
+  const barrelRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
     const cleanup = () => {
@@ -24,20 +25,15 @@ function PointsPage() {
     bitcoin.src = bitcoinLogo
     bitcoin.className = 'floating-bitcoin'
     
-    const containerRect = containerRef.current.getBoundingClientRect()
-
-    const startX = x - containerRect.left
-    const startY = y - containerRect.top
-
-    bitcoin.style.left = `${startX}px`
-    bitcoin.style.top = `${startY}px`
+    bitcoin.style.left = `${x}px`
+    bitcoin.style.top = `${y}px`
 
     const distance = 50 + Math.random() * 100
-    const endX = startX + Math.cos(angle) * distance
-    const endY = startY + Math.sin(angle) * distance
+    const endX = x + Math.cos(angle) * distance
+    const endY = y + Math.sin(angle) * distance
 
-    bitcoin.style.setProperty('--start-x', `${startX}px`)
-    bitcoin.style.setProperty('--start-y', `${startY}px`)
+    bitcoin.style.setProperty('--start-x', `${x}px`)
+    bitcoin.style.setProperty('--start-y', `${y}px`)
     bitcoin.style.setProperty('--end-x', `${endX}px`)
     bitcoin.style.setProperty('--end-y', `${endY}px`)
 
@@ -46,14 +42,26 @@ function PointsPage() {
     setTimeout(() => bitcoin.remove(), 1000)
   }
 
-  const incrementCount = (e: React.MouseEvent<HTMLImageElement>) => {
+  const incrementCount = () => {
     setCount((prevCount) => prevCount + 1)
     const numBitcoins = 15
-    const clickX = e.clientX
-    const clickY = e.clientY
-    for (let i = 0; i < numBitcoins; i++) {
-      const angle = (i / numBitcoins) * Math.PI * 2
-      createFloatingBitcoin(clickX, clickY, angle)
+    
+    if (containerRef.current && barrelRef.current) {
+      const containerRect = containerRef.current.getBoundingClientRect()
+      const barrelRect = barrelRef.current.getBoundingClientRect()
+
+      // Calculate the center of the barrel
+      const centerX = barrelRect.width / 2
+      const centerY = barrelRect.height / 2
+
+      // Calculate the explosion start point (center of the barrel)
+      const startX = barrelRect.left - containerRect.left + centerX
+      const startY = barrelRect.top - containerRect.top + centerY
+
+      for (let i = 0; i < numBitcoins; i++) {
+        const angle = (i / numBitcoins) * Math.PI * 2
+        createFloatingBitcoin(startX, startY, angle)
+      }
     }
   }
 
@@ -70,6 +78,7 @@ function PointsPage() {
       </div>
       <div className="card">
         <img 
+          ref={barrelRef}
           src={oilBarrel} 
           alt="Oil Barrel" 
           className="oil-barrel" 
