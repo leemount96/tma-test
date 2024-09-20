@@ -4,6 +4,12 @@
     { "src": "bot.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/bot.js" }
+    {
+      "src": "/(.*)",
+      "dest": "/bot.js",
+      "headers": {
+        "Authorization": "Bearer ${BOT_TOKEN}"
+      }
+    }
   ]
 }
