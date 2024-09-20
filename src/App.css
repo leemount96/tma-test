@@ -236,3 +236,33 @@ h1 {
     transform: scale(1.05);
   }
 }
+
+.referral-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.referral-link input {
+  width: 60%;
+  padding: 0.5rem;
+  border: 1px solid #f7931a;
+  border-radius: 4px 0 0 4px;
+  font-size: 0.9rem;
+}
+
+.referral-link button {
+  padding: 0.5rem 1rem;
+  background-color: #f7931a;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.referral-link button:hover {
+  background-color: #e67e00;
+}
