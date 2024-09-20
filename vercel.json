@@ -5,11 +5,12 @@
   ],
   "routes": [
     {
+      "src": "/api/bot",
+      "dest": "/bot.js"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/bot.js",
-      "headers": {
-        "Authorization": "Bearer ${BOT_TOKEN}"
-      }
+      "dest": "/index.html"
     }
   ]
 }
