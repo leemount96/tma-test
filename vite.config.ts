@@ -13,6 +13,6 @@ export default defineConfig({
       },
     },
   },
-  base: './',
+  base: '/tma-test/',
   assetsInclude: ['**/*.png', '**/*.jpg', '**/*.svg'],
 });

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { HashRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import WebApp from '@twa-dev/sdk';
 import PointsPage from './components/PointsPage';
 import bitcoinLogo from './assets/bitcoin.png';
@@ -11,13 +11,19 @@ function App() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    try {
-      WebApp.ready();
-      setIsReady(true);
-    } catch (err) {
-      console.error('Error initializing WebApp:', err);
-      setError('Failed to initialize WebApp');
-    }
+    const initWebApp = async () => {
+      try {
+        console.log('Initializing WebApp...');
+        await WebApp.ready();
+        console.log('WebApp initialized successfully');
+        setIsReady(true);
+      } catch (err) {
+        console.error('Error initializing WebApp:', err);
+        setError('Failed to initialize WebApp');
+      }
+    };
+
+    initWebApp();
   }, []);
 
   if (error) {
@@ -29,7 +35,7 @@ function App() {
   }
 
   return (
-    <Router>
+    <Router basename="/tma-test">
       <Routes>
         <Route path="/" element={
           <div className="landing-page">
