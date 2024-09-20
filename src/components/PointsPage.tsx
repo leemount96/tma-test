@@ -53,15 +53,14 @@ function PointsPage() {
 
   const incrementCount = () => {
     setCount((prevCount) => prevCount + 1)
-    setShowTooltip(false) // Hide tooltip when barrel is clicked
-    setHasClicked(true) // Mark that the user has clicked
+    setShowTooltip(false)
+    setHasClicked(true)
     const numBitcoins = 15
     
     if (containerRef.current && barrelRef.current) {
       const containerRect = containerRef.current.getBoundingClientRect()
       const barrelRect = barrelRef.current.getBoundingClientRect()
 
-      // Calculate the center of the barrel
       const centerX = barrelRect.left - containerRect.left + barrelRect.width / 2
       const centerY = barrelRect.top - containerRect.top + barrelRect.height / 2
 
@@ -73,7 +72,7 @@ function PointsPage() {
   }
 
   return (
-    <div className="page-container">
+    <div className="page-container" ref={containerRef}>
       <div className="logo-container">
         <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
         <span className="logo-plus">+</span>

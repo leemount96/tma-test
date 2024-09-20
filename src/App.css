@@ -28,23 +28,24 @@ body, html {
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  padding-bottom: 70px; /* Increased from 60px to accommodate taller nav bar */
+  padding-bottom: 70px; /* For the navigation bar */
+  box-sizing: border-box;
 }
 
 .page-content {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* This will center the content vertically */
+  justify-content: center;
   align-items: center;
-  padding: 2rem 1rem; /* Add some padding to prevent content from touching the edges */
+  padding: 1rem;
 }
 
 .logo-container {
+  margin-bottom: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
   padding: 1rem;
 }
 
