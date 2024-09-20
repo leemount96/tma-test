@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import bitcoinLogo from '../assets/bitcoin.png'
 import eulerLogo from '../assets/euler.png'
 import oilBarrel from '../assets/oil.png'
@@ -81,35 +80,26 @@ function PointsPage() {
   }
 
   return (
-    <div className="points-page">
+    <div className="points-page" ref={containerRef}>
       <div className="logo-container">
-        <a href="https://bitcoin.org" target="_blank" rel="noopener noreferrer">
-          <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
-        </a>
+        <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
         <span className="logo-plus">+</span>
-        <a href="http://euler.finance/" target="_blank" rel="noopener noreferrer">
-          <img src={eulerLogo} className="logo" alt="Euler logo" />
-        </a>
+        <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
-      <div className="card">
-        <div className="barrel-container">
-          <img 
-            ref={barrelRef}
-            src={oilBarrel} 
-            alt="Oil Barrel" 
-            className="oil-barrel" 
-            onClick={incrementCount}
-          />
-          <Tooltip show={showTooltip} />
-        </div>
-        <div className="points-display">
-          <span className="points-label">₿earn points:</span>
-          <span className="points-value">{count}</span>
-        </div>
+      <div className="barrel-container">
+        <img 
+          ref={barrelRef}
+          src={oilBarrel} 
+          alt="Oil Barrel" 
+          className="oil-barrel" 
+          onClick={incrementCount}
+        />
+        <Tooltip show={showTooltip} />
       </div>
-      <Link to="/" className="back-button">
-        Back to Home
-      </Link>
+      <div className="points-display">
+        <span className="points-label">Points:</span>
+        <span className="points-value">{count}</span>
+      </div>
     </div>
   )
 }

@@ -100,8 +100,9 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 100%;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 100%;
   padding: 1rem;
   box-sizing: border-box;
   overflow: hidden;
@@ -110,6 +111,23 @@ h1 {
 .logo-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.barrel-container {
+  position: relative;
+  display: inline-block;
   margin-bottom: 2rem;
 }
 
@@ -126,6 +144,20 @@ h1 {
 
 .oil-barrel:active {
   transform: scale(0.95);
+}
+
+.points-display {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #f7931a;
+}
+
+.points-label {
+  margin-right: 0.5rem;
+}
+
+.points-value {
+  color: #e67e00;
 }
 
 /* Back button styles */
@@ -178,15 +210,6 @@ h1 {
   pointer-events: none;
   animation: explode 1s ease-out forwards;
   z-index: 10;
-}
-
-.points-display {
-  margin-top: 1rem;
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #f7931a;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  animation: pulse 1.5s infinite alternate;
 }
 
 .points-label {
