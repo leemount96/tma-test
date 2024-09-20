@@ -6,7 +6,7 @@ bot.command('start', (ctx) => {
   ctx.reply('Welcome to ₿earn! Click the button below to open the mini app:', {
     reply_markup: {
       inline_keyboard: [[
-        { text: "Open ₿earn App", web_app: { url: "https://leemount96.github.io/tma-test" } }
+        { text: "Open ₿earn App", web_app: { url: "https://leemount96.github.io/tma-test/" } }
       ]]
     }
   });

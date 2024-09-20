@@ -6,5 +6,5 @@ export default defineConfig({
         outDir: './docs',
         sourcemap: true,
     },
-    base: './',
+    base: '/tma-test/',
 });

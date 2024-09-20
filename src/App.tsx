@@ -8,19 +8,26 @@ import WebApp from '@twa-dev/sdk'
 
 function App() {
   const [error, setError] = useState<string | null>(null);
+  const [isWebAppReady, setIsWebAppReady] = useState(false);
 
   useEffect(() => {
     try {
+      console.log('App mounted, initializing WebApp...');
       WebApp.ready();
-      console.log('WebApp ready');
+      setIsWebAppReady(true);
+      console.log('WebApp ready called in App');
     } catch (e) {
-      console.error('Error initializing WebApp:', e);
-      setError('Failed to initialize WebApp');
+      console.error('Error in App useEffect:', e);
+      setError(`Failed to initialize WebApp: ${e}`);
     }
   }, []);
 
   if (error) {
     return <div>Error: {error}</div>;
+  }
+
+  if (!isWebAppReady) {
+    return <div>Loading...</div>;
   }
 
   return (

@@ -4,7 +4,13 @@ import App from './App'
 import './index.css'
 import WebApp from '@twa-dev/sdk'
 
-WebApp.ready();
+try {
+  console.log('Initializing WebApp...');
+  WebApp.ready();
+  console.log('WebApp initialized successfully');
+} catch (error) {
+  console.error('Error initializing WebApp:', error);
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
