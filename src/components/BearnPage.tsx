@@ -3,7 +3,7 @@ import eulerLogo from '../assets/euler.png';
 
 function BearnPage() {
   return (
-    <div className="bearn-page">
+    <div className="page-container">
       <div className="logo-container">
         <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
         <span className="logo-plus">+</span>

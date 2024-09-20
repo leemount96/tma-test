@@ -18,7 +18,10 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["vite/client", "@twa-dev/sdk", "react-router-dom"]
+    "types": ["vite/client", "@twa-dev/sdk", "react-router-dom"],
+    "paths": {
+      "react-router-dom": ["./node_modules/react-router-dom"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

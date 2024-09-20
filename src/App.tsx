@@ -23,16 +23,18 @@ function NavBar() {
 
 function HomePage() {
   return (
-    <div className="landing-page">
-      <div className="logo-container">
-        <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
-        <span className="logo-plus">+</span>
-        <img src={eulerLogo} className="logo" alt="Euler logo" />
+    <div className="page-container home-page">
+      <div className="home-content">
+        <div className="logo-container">
+          <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
+          <span className="logo-plus">+</span>
+          <img src={eulerLogo} className="logo" alt="Euler logo" />
+        </div>
+        <h1>Welcome to ₿earn</h1>
+        <Link to="/points" className="start-button">
+          Start to ₿earn Points
+        </Link>
       </div>
-      <h1>Welcome to ₿earn</h1>
-      <Link to="/points" className="start-button">
-        Start to ₿earn Points
-      </Link>
     </div>
   );
 }

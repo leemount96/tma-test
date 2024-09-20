@@ -3,7 +3,7 @@ import eulerLogo from '../assets/euler.png';
 
 function SharePage() {
   return (
-    <div className="share-page">
+    <div className="page-container">
       <div className="logo-container">
         <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
         <span className="logo-plus">+</span>

@@ -31,22 +31,19 @@ function PointsPage() {
     return cleanup
   }, [])
 
-  const createFloatingBitcoin = (x: number, y: number, angle: number) => {
+  const createFloatingBitcoin = (startX: number, startY: number, angle: number) => {
     if (!containerRef.current) return
 
     const bitcoin = document.createElement('img')
     bitcoin.src = bitcoinLogo
     bitcoin.className = 'floating-bitcoin'
     
-    bitcoin.style.left = `${x}px`
-    bitcoin.style.top = `${y}px`
-
     const distance = 50 + Math.random() * 100
-    const endX = x + Math.cos(angle) * distance
-    const endY = y + Math.sin(angle) * distance
+    const endX = startX + Math.cos(angle) * distance
+    const endY = startY + Math.sin(angle) * distance
 
-    bitcoin.style.setProperty('--start-x', `${x}px`)
-    bitcoin.style.setProperty('--start-y', `${y}px`)
+    bitcoin.style.setProperty('--start-x', `${startX}px`)
+    bitcoin.style.setProperty('--start-y', `${startY}px`)
     bitcoin.style.setProperty('--end-x', `${endX}px`)
     bitcoin.style.setProperty('--end-y', `${endY}px`)
 
@@ -65,22 +62,18 @@ function PointsPage() {
       const barrelRect = barrelRef.current.getBoundingClientRect()
 
       // Calculate the center of the barrel
-      const centerX = barrelRect.width / 2
-      const centerY = barrelRect.height / 2
-
-      // Calculate the explosion start point (center of the barrel)
-      const startX = barrelRect.left - containerRect.left + centerX
-      const startY = barrelRect.top - containerRect.top + centerY
+      const centerX = barrelRect.left - containerRect.left + barrelRect.width / 2
+      const centerY = barrelRect.top - containerRect.top + barrelRect.height / 2
 
       for (let i = 0; i < numBitcoins; i++) {
         const angle = (i / numBitcoins) * Math.PI * 2
-        createFloatingBitcoin(startX, startY, angle)
+        createFloatingBitcoin(centerX, centerY, angle)
       }
     }
   }
 
   return (
-    <div className="points-page" ref={containerRef}>
+    <div className="page-container" ref={containerRef}>
       <div className="logo-container">
         <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
         <span className="logo-plus">+</span>
