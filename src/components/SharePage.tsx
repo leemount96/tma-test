@@ -6,7 +6,6 @@ import eulerLogo from '../assets/euler.png';
 function SharePage() {
   const [referralLink, setReferralLink] = useState('');
   const [isCopied, setIsCopied] = useState(false);
-  const [shareCount, setShareCount] = useState(0);
 
   useEffect(() => {
     const initData = WebApp.initData;
@@ -26,7 +25,6 @@ function SharePage() {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(referralLink).then(() => {
       setIsCopied(true);
-      setShareCount(prevCount => prevCount + 1);
       setTimeout(() => setIsCopied(false), 2000);
     }, (err) => {
       console.error('Could not copy text: ', err);
@@ -42,27 +40,23 @@ function SharePage() {
         <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
       <div className="share-content">
-        <h2 className="share-title">Spread the ₿earn Love!</h2>
-        <div className="reward-info">
-          <h3>🎉 Earn 100 Points per Referral!</h3>
-        </div>
-        <div className="referral-link-container">
-          <input type="text" value={referralLink} readOnly className="referral-input" />
-          <button 
-            onClick={copyToClipboard}
-            className={`copy-button ${isCopied ? 'copied' : ''}`}
-          >
-            {isCopied ? 'Copied!' : 'Copy'}
-          </button>
-        </div>
-        <div className="share-stats">
-          <p>Shares: {shareCount} | Keep climbing!</p>
+        <h2 className="share-title">Invite Friends & Earn!</h2>
+        <div className="share-card">
+          <p className="share-reward">🎉 Earn 100 Points per Referral!</p>
+          <div className="referral-link-container">
+            <input type="text" value={referralLink} readOnly className="referral-input" />
+            <button 
+              onClick={copyToClipboard}
+              className={`copy-button ${isCopied ? 'copied' : ''}`}
+            >
+              {isCopied ? 'Copied!' : 'Copy'}
+            </button>
+          </div>
         </div>
         <div className="share-benefits">
-          <ul>
-            <li>💰 Earn points for referrals</li>
-            <li>🏆 Unlock exclusive rewards</li>
-          </ul>
+          <div className="feature-item">💰 Earn points for each friend</div>
+          <div className="feature-item">🏆 Unlock exclusive rewards</div>
+          <div className="feature-item">🚀 Help friends boost earnings</div>
         </div>
       </div>
     </div>
