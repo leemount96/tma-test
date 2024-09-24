@@ -53,7 +53,7 @@ function SharePage() {
             </button>
           </div>
         </div>
-        <div className="share-benefits">
+        <div className="feature-list">
           <div className="feature-item">💰 Earn points for each friend</div>
           <div className="feature-item">🏆 Unlock exclusive rewards</div>
           <div className="feature-item">🚀 Help friends boost earnings</div>

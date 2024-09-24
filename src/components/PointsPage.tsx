@@ -133,11 +133,11 @@ function PointsPage() {
             ref={barrelRef}
             src={oilBarrel}
             alt="Oil Barrel"
-            className="oil-barrel"
+            className="barrel-image oil-barrel"
           />
           <Tooltip show={showTooltip} />
         </div>
-        <div className="points-info">
+        <div className="feature-list">
           <div className="feature-item">🎯 Tap to earn more points!</div>
           <div className="feature-item">🏆 Unlock exciting rewards</div>
         </div>

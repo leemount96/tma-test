@@ -47,14 +47,21 @@ function HomePage() {
   return (
     <div className="page-container home-page">
       <div className="home-content">
-        <div className="logo-container home-logo">
+        <div className="logo-container">
           <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
           <span className="logo-plus">+</span>
           <img src={eulerLogo} className="logo" alt="Euler logo" />
         </div>
         <h1>Welcome to ₿earn</h1>
+        <p className="home-description">Earn points, boost yields, and more!</p>
+        <div className="home-features">
+          <div className="feature-item">🚀 Earn points daily</div>
+          <div className="feature-item">🤝 Share with friends</div>
+          <div className="feature-item">🏆 Climb the leaderboard</div>
+          <div className="feature-item">🔥 Exciting features coming soon!</div>
+        </div>
         <Link to="/points" className="start-button">
-          Start to ₿earn Points
+          Start ₿earning Now!
         </Link>
       </div>
     </div>
