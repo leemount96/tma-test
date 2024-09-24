@@ -269,14 +269,18 @@ h1 {
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
+  width: 100%; /* Ensure the container takes full width */
+  max-width: 600px; /* Optional: limit the maximum width */
 }
 
 .referral-link input {
-  width: 60%;
+  flex: 1; /* Make the input take the remaining space */
   padding: 0.5rem;
   border: 1px solid #13D2A2; /* Updated border color */
   border-radius: 4px 0 0 4px;
   font-size: 0.9rem;
+  background-color: #f0f0f0; /* Updated background color */
+  color: #333; /* Updated text color */
 }
 
 .referral-link button {

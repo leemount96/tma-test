@@ -16,9 +16,10 @@ function SharePage() {
 
   const copyReferralLink = () => {
     navigator.clipboard.writeText(referralLink).then(() => {
-      WebApp.showAlert('Referral link copied to clipboard!');
+      // Remove the confirmation pop-up and prevent the app from closing
+      WebApp.showAlert('Referral link copied to clipboard!', { keepAppOpen: true });
     }).catch(() => {
-      WebApp.showAlert('Failed to copy referral link.');
+      WebApp.showAlert('Failed to copy referral link.', { keepAppOpen: true });
     });
   };
 

@@ -7,5 +7,5 @@ declare module '@twa-dev/sdk' {
       // Add other properties as needed
     };
   };
-  export function showAlert(message: string): void;
+  export function showAlert(message: string, options?: { keepAppOpen?: boolean }): void;
 }
