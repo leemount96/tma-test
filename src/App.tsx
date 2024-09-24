@@ -53,12 +53,11 @@ function HomePage() {
           <img src={eulerLogo} className="logo" alt="Euler logo" />
         </div>
         <h1>Welcome to ₿earn</h1>
-        <p className="home-description">Earn points, boost yields, and more!</p>
         <div className="home-features">
           <div className="feature-item">🚀 Earn points daily</div>
           <div className="feature-item">🤝 Share with friends</div>
           <div className="feature-item">🏆 Climb the leaderboard</div>
-          <div className="feature-item">🔥 Exciting features coming soon!</div>
+          <div className="feature-item">🔥 More coming soon!</div>
         </div>
         <Link to="/points" className="start-button">
           Start ₿earning Now!
