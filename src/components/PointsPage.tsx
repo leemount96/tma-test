@@ -35,7 +35,7 @@ function PointsPage() {
     bitcoin.src = bitcoinLogo
     bitcoin.className = 'floating-bitcoin'
     
-    const distance = 50 + Math.random() * 100
+    const distance = 100 + Math.random() * 150 // Increased distance
     const endX = startX + Math.cos(angle) * distance
     const endY = startY + Math.sin(angle) * distance
 
@@ -48,14 +48,14 @@ function PointsPage() {
 
     containerRef.current.appendChild(bitcoin)
 
-    setTimeout(() => bitcoin.remove(), 1000)
+    setTimeout(() => bitcoin.remove(), 1500) // Increased duration
   }
 
   const incrementCount = () => {
     setCount((prevCount) => prevCount + 1)
     setShowTooltip(false)
     setHasClicked(true)
-    const numBitcoins = 15
+    const numBitcoins = 30 // Increased number of coins
     
     if (containerRef.current && barrelRef.current) {
       const containerRect = containerRef.current.getBoundingClientRect()

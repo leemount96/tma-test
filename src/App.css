@@ -14,6 +14,8 @@ body, html {
   height: 100%;
   width: 100%;
   overflow: hidden;
+  background-color: white; /* Updated background color */
+  color: black; /* Updated text color */
 }
 
 .app-container {
@@ -57,13 +59,13 @@ body, html {
 }
 
 .logo:hover {
-  filter: drop-shadow(0 0 2em #f7931aaa);
+  filter: drop-shadow(0 0 2em #13D2A2aa); /* Updated hover color */
 }
 
 .logo-plus {
   font-size: 2em;  /* Reduced from 3em */
   margin: 0 0.5em;
-  color: #f7931a;
+  color: #13D2A2; /* Updated color */
 }
 
 h1 {
@@ -77,14 +79,14 @@ h1 {
   font-size: 1.2em;
   font-weight: 600;
   color: #ffffff;
-  background-color: #f7931a;
+  background-color: #13D2A2; /* Updated button color */
   border-radius: 8px;
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
 .start-button:hover {
-  background-color: #e67e00;
+  background-color: #11B08C; /* Slightly darker shade for hover */
 }
 
 .barrel-container {
@@ -114,7 +116,7 @@ h1 {
 .points-display {
   font-size: 1.5em;
   font-weight: bold;
-  color: #f7931a;
+  color: #13D2A2; /* Updated color */
 }
 
 .points-label {
@@ -122,12 +124,12 @@ h1 {
 }
 
 .points-value {
-  color: #e67e00;
+  color: #11B08C; /* Updated color */
 }
 
 .coming-soon {
   font-size: 2em;
-  color: #f7931a;
+  color: #13D2A2; /* Updated color */
   text-align: center;
   margin-top: 2rem;
 }
@@ -136,7 +138,7 @@ h1 {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #f7931a;
+  background-color: #13D2A2; /* Updated background color */
   padding: 5px 0;
   position: fixed;
   bottom: 0;
@@ -205,27 +207,27 @@ h1 {
     transform: translate(
       calc(var(--end-x) - var(--start-x)),
       calc(var(--end-y) - var(--start-y))
-    ) scale(1);
+    ) scale(1.5); /* Increased scale */
     opacity: 0;
   }
 }
 
 .floating-bitcoin {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 30px; /* Increased size */
+  height: 30px; /* Increased size */
   pointer-events: none;
-  animation: floatAway 1s ease-out forwards;
+  animation: floatAway 1.5s ease-out forwards; /* Increased duration */
 }
 
-/* ... (previous styles remain unchanged) ... */
+/* ... (rest of the styles remain unchanged) ... */
 
 .tooltip {
   position: absolute;
   top: -60px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #f7931a;
+  background-color: #13D2A2; /* Updated background color */
   color: white;
   padding: 10px 15px;
   border-radius: 20px;
@@ -262,14 +264,14 @@ h1 {
 .referral-link input {
   width: 60%;
   padding: 0.5rem;
-  border: 1px solid #f7931a;
+  border: 1px solid #13D2A2; /* Updated border color */
   border-radius: 4px 0 0 4px;
   font-size: 0.9rem;
 }
 
 .referral-link button {
   padding: 0.5rem 1rem;
-  background-color: #f7931a;
+  background-color: #13D2A2; /* Updated button color */
   color: white;
   border: none;
   border-radius: 0 4px 4px 0;
@@ -279,7 +281,7 @@ h1 {
 }
 
 .referral-link button:hover {
-  background-color: #e67e00;
+  background-color: #11B08C; /* Slightly darker shade for hover */
 }
 
 .referral-link button.copied {
@@ -287,7 +289,7 @@ h1 {
   transform: scale(1.05);
 }
 
-/* ... (previous styles remain unchanged) ... */
+/* ... (rest of the styles remain unchanged) ... */
 
 .home-content .logo {
   height: 5em;  /* Increased from 4em */
