@@ -4,23 +4,21 @@ import eulerLogo from '../assets/euler.png';
 import oilBarrel from '../assets/oil.png';
 
 function Tooltip({ show }: { show: boolean }) {
-  return (
-    <div className={`tooltip ${show ? 'show' : ''}`}>
-      Tap the barrel to start ₿earning points!
-    </div>
-  )
-}
-
-function PointsPage() {
-  const [count, setCount] = useState(0);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const barrelRef = useRef<HTMLImageElement>(null);
-
-  const userId = new URLSearchParams(window.location.search).get('userId');
-
-  useEffect(() => {
-    const fetchPoints = async () => {
+    return (
+      <div className={`tooltip ${show ? 'show' : ''}`}>
+        Tap the barrel to start ₿earning points!
+      </div>
+    )
+  }
+  
+  function PointsPage({ userId }: { userId: string | null }) {
+    const [count, setCount] = useState(0);
+    const [showTooltip, setShowTooltip] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const barrelRef = useRef<HTMLImageElement>(null);
+  
+    useEffect(() => {
+      const fetchPoints = async () => {
         try {
           if (userId) {
             const response = await fetch(`https://first-tma-five.vercel.app/api/getPoints?userId=${userId}`);
@@ -34,27 +32,29 @@ function PointsPage() {
           console.error("Error fetching points:", error);
         }
       };
-    fetchPoints();
-  }, [userId]);
-
-  const savePoints = async (newCount: number) => {
-    if (userId) {
-      try {
-        const response = await fetch('https://first-tma-five.vercel.app/api/updatePoints', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ userId, points: newCount }),
-        });
-        if (!response.ok) {
-          throw new Error('Failed to update points');
-        }
-      } catch (error) {
-        console.error("Error saving points:", error);
+      if (userId) {
+        fetchPoints();
       }
-    }
-  };
+    }, [userId]);
+  
+    const savePoints = async (newCount: number) => {
+      if (userId) {
+        try {
+          const response = await fetch('https://first-tma-five.vercel.app/api/updatePoints', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId, points: newCount }),
+          });
+          if (!response.ok) {
+            throw new Error('Failed to update points');
+          }
+        } catch (error) {
+          console.error("Error saving points:", error);
+        }
+      }
+    };
 
   const incrementCount = (event: React.MouseEvent<HTMLDivElement>) => {
     setCount((prevCount) => {

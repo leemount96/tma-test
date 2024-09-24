@@ -1,35 +1,43 @@
 import { useState, useEffect } from 'react';
-import WebApp from '@twa-dev/sdk';
 import bitcoinLogo from '../assets/Bearn.png';
 import eulerLogo from '../assets/euler.png';
+import WebApp from '@twa-dev/sdk';
 
-function SharePage() {
+function SharePage({ userId }: { userId: string | null }) {
   const [referralLink, setReferralLink] = useState('');
   const [isCopied, setIsCopied] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const initData = WebApp.initData;
-    let userId = 'unknown';
-
-    if (typeof initData === 'object' && initData.user && initData.user.id) {
-      userId = initData.user.id.toString();
+    if (userId) {
+      const baseUrl = 'https://t.me/Bearn_Bot';
+      const generatedLink = `${baseUrl}?start=ref_${userId}`;
+      setReferralLink(generatedLink);
     } else {
-      console.error('User data not available in WebApp.initData');
+      setError('User ID not available. Unable to generate referral link.');
     }
-    
-    const baseUrl = 'https://t.me/Bearn_Bot';
-    const generatedLink = `${baseUrl}?start=ref_${userId}`;
-    setReferralLink(generatedLink);
-  }, []);
+  }, [userId]);
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(referralLink).then(() => {
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
-    }, (err) => {
-      console.error('Could not copy text: ', err);
-      WebApp.showAlert('Failed to copy referral link.');
-    });
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(referralLink).then(() => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      }, (err) => {
+        console.error('Could not copy text: ', err);
+        setError('Failed to copy referral link.');
+      });
+    } else {
+      setError('Clipboard functionality not available in this environment.');
+    }
+  };
+
+  const showAlert = (message: string) => {
+    if (WebApp.isSupported('showAlert')) {
+      WebApp.showAlert(message);
+    } else {
+      setError(message);
+    }
   };
 
   return (
@@ -41,6 +49,7 @@ function SharePage() {
       </div>
       <div className="content-container share-content">
         <h2 className="share-title">Invite Friends & Earn!</h2>
+        {error && <div className="error-message">{error}</div>}
         <div className="share-card">
           <p className="share-reward">🎉 Earn 100 Points per Referral!</p>
           <div className="referral-link-container">

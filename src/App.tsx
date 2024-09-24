@@ -71,13 +71,35 @@ function HomePage() {
 function App() {
   const [isReady, setIsReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     const initWebApp = async () => {
       try {
         console.log('Initializing WebApp...');
-        await WebApp.ready();
-        console.log('WebApp initialized successfully');
+        
+        // Check if WebApp.ready is available
+        if (typeof WebApp.ready === 'function') {
+          await WebApp.ready();
+          console.log('WebApp initialized successfully');
+        } else {
+          console.log('WebApp.ready() not available, continuing without initialization');
+        }
+        
+        // Get user ID from WebApp.initData or use a fallback
+        if (WebApp.initData && typeof WebApp.initData === 'object') {
+          const initData = WebApp.initData;
+          if (initData.user && initData.user.id) {
+            setUserId(initData.user.id.toString());
+          } else {
+            console.warn('User data not available in WebApp.initData');
+            setUserId('demo_user'); // Use a demo user ID as fallback
+          }
+        } else {
+          console.warn('WebApp.initData not available');
+          setUserId('demo_user'); // Use a demo user ID as fallback
+        }
+        
         setIsReady(true);
       } catch (err) {
         console.error('Error initializing WebApp:', err);
@@ -101,9 +123,9 @@ function App() {
       <div className="app-container">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/points" element={<PointsPage />} />
+          <Route path="/points" element={<PointsPage userId={userId} />} />
           <Route path="/bearn" element={<BearnPage />} />
-          <Route path="/share" element={<SharePage />} />
+          <Route path="/share" element={<SharePage userId={userId} />} />
         </Routes>
         <NavBar />
       </div>
