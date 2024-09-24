@@ -39,7 +39,7 @@ function SharePage() {
         <span className="logo-plus">+</span>
         <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
-      <div className="share-content">
+      <div className="content-container share-content">
         <h2 className="share-title">Invite Friends & Earn!</h2>
         <div className="share-card">
           <p className="share-reward">🎉 Earn 100 Points per Referral!</p>

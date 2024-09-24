@@ -123,7 +123,7 @@ function PointsPage() {
         <span className="logo-plus">+</span>
         <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
-      <div className="content-container" ref={containerRef}>
+      <div className="content-container points-content" ref={containerRef}>
         <div className="points-display">
           <span className="points-label">Points: </span>
           <span className="points-value">{count}</span>
@@ -138,7 +138,8 @@ function PointsPage() {
           <Tooltip show={showTooltip} />
         </div>
         <div className="points-info">
-          <p>Tap to earn more! Unlock rewards as you progress.</p>
+          <div className="feature-item">🎯 Tap to earn more points!</div>
+          <div className="feature-item">🏆 Unlock exciting rewards</div>
         </div>
       </div>
     </div>

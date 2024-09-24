@@ -53,7 +53,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 1rem; /* Reduced margin */
+  margin-bottom: 0.5rem; /* Reduced margin */
 }
 
 .logo {
@@ -72,17 +72,17 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
+  height: 100%;
+  padding: 10px 0;
 }
 
 .barrel-container {
   position: relative;
-  margin-bottom: 20px;
-  display: inline-block;
-  cursor: pointer;
-  width: 180px; /* Slightly reduced barrel size */
-  height: 180px;
+  margin: 10px 0 30px; /* Adjusted margins */
+  width: 160px; /* Slightly reduced barrel size */
+  height: 160px;
   animation: barrel-pulse 2s infinite;
+  cursor: pointer;
 }
 
 .oil-barrel {
@@ -168,7 +168,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .points-display {
   font-size: 32px; /* Reduced font size */
-  margin-bottom: 10px; /* Reduced margin */
+  margin-bottom: 15px; /* Slightly increased margin */
   padding: 10px 20px; /* Reduced padding */
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 20px;
@@ -201,37 +201,34 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .points-info {
-  margin-top: 10px; /* Reduced margin */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.points-info .feature-item {
+  font-size: 0.9em;
+  padding: 8px 12px;
   text-align: center;
-  color: #333;
-  font-size: 16px; /* Slightly reduced font size */
-  max-width: 300px;
-}
-
-.points-info p {
-  margin: 5px 0; /* Reduced margin between paragraphs */
-}
-
-.barrel-container {
-  margin: 15px 0; /* Reduced margin */
-  position: relative;
 }
 
 .barrel-container::after {
   content: '👆 Tap me!';
   position: absolute;
-  bottom: -20px; /* Moved "Tap me!" text closer to the barrel */
+  bottom: -35px; /* Moved "Tap me!" text further down */
   left: 50%;
   transform: translateX(-50%);
-  font-size: 16px; /* Reduced font size */
+  font-size: 16px;
   color: #0A8C6A;
   opacity: 0.8;
   animation: bounce 1s ease-in-out infinite;
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-10px); }
+  50% { transform: translateX(-50%) translateY(-8px); }
 }
 
 .bottom-nav {
@@ -519,13 +516,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Update these styles in your App.css file */
 
-.bearn-content {
+.content-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -534,127 +538,11 @@ h1, h2, h3, h4, h5, h6 {
   padding: 10px 0;
 }
 
-.coming-soon-title {
-  font-size: 1.8em;
-  color: #0A8C6A;
-  margin-bottom: 0.3rem;
-}
-
-.feature-text {
-  font-size: 1.5em;
-  color: #0A8C6A;
-  margin-bottom: 0.5rem;
-}
-
-.feature-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  margin-bottom: 0.8rem;
-}
-
-.feature-item {
-  font-size: 0.9em;
-  color: #1A1A1A;
-  background-color: rgba(19, 210, 162, 0.15);
-  padding: 0.3rem 0.5rem;
-  border-radius: 10px;
-}
-
-.cta-button {
-  background-color: #0A8C6A;
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  font-size: 1em;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  margin-top: 0.8rem;
-}
-
-.cta-button:hover {
-  background-color: #077355;
-  transform: scale(1.05);
-}
-
-/* Update these styles in your App.css file */
-
+.bearn-content,
 .share-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: 10px 0;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-.share-title {
-  font-size: 1.8em;
-  color: #0A8C6A;
-  margin-bottom: 0.5rem;
-}
-
-.share-card {
-  background-color: rgba(19, 210, 162, 0.1);
-  padding: 1rem;
-  border-radius: 20px;
-  margin-bottom: 1rem;
-}
-
-.share-reward {
-  font-size: 1.2em;
-  color: #0A8C6A;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-}
-
-.referral-link-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 0.5rem;
-}
-
-.referral-input {
-  flex-grow: 1;
-  padding: 8px;
-  font-size: 0.9em;
-  border: 2px solid #13D2A2;
-  border-radius: 20px 0 0 20px;
-  outline: none;
-  background-color: white;
-  color: #333;
-}
-
-.copy-button {
-  padding: 8px 15px;
-  font-size: 0.9em;
-  background-color: #13D2A2;
-  color: white;
-  border: none;
-  border-radius: 0 20px 20px 0;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.copy-button:hover {
-  background-color: #0A8C6A;
-}
-
-.copy-button.copied {
-  background-color: #0A8C6A;
-}
-
-.share-benefits {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.feature-item {
-  font-size: 0.9em;
-  color: #1A1A1A;
-  background-color: rgba(19, 210, 162, 0.15);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  text-align: left;
-}
+/* Rest of the CSS remains the same */
