@@ -10,7 +10,9 @@ function SharePage() {
     const initData = WebApp.initData;
     if (initData.user) {
       const userId = initData.user.id;
-      setReferralLink(`https://example.com/referral?user=${userId}`);
+      // Generate the referral link using the bot's username and the user's ID
+      const botUsername = 'Bearn_Bot'; // Replace with your actual bot username if different
+      setReferralLink(`https://t.me/${botUsername}?start=ref_${userId}`);
     }
   }, []);
 
