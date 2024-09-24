@@ -1,5 +1,8 @@
 const { Telegraf } = require('telegraf');
 const admin = require('firebase-admin');
+const express = require('express');
+const app = express();
+app.use(express.json());
 
 // Decode the base64-encoded service account key
 const serviceAccount = JSON.parse(Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_KEY, 'base64').toString('utf8'));
@@ -39,7 +42,7 @@ bot.on('message', (ctx) => {
 });
 
 // This is the Vercel serverless function handler
-module.exports = async (req, res) => {
+app.post('/api/bot', async (req, res) => {
   console.log('Received update:', req.body);
   
   // Check if the request includes a valid bot token
@@ -56,10 +59,10 @@ module.exports = async (req, res) => {
     console.error('Error in bot update handler:', error);
     res.status(500).json({ error: 'Internal Server Error', details: error.message });
   }
-};
+});
 
 // Add endpoints to read/write points
-module.exports.getPoints = async (req, res) => {
+app.get('/api/getPoints', async (req, res) => {
   try {
     const userId = req.query.userId;
     const userRef = db.collection('users').doc(userId);
@@ -73,9 +76,9 @@ module.exports.getPoints = async (req, res) => {
     console.error('Error fetching points:', error);
     res.status(500).json({ error: 'Internal Server Error', details: error.message });
   }
-};
+});
 
-module.exports.updatePoints = async (req, res) => {
+app.post('/api/updatePoints', async (req, res) => {
   try {
     const userId = req.body.userId;
     const points = req.body.points;
@@ -86,4 +89,6 @@ module.exports.updatePoints = async (req, res) => {
     console.error('Error updating points:', error);
     res.status(500).json({ error: 'Internal Server Error', details: error.message });
   }
-};
+});
+
+module.exports = app;

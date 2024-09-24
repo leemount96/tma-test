@@ -4,9 +4,9 @@
     { "src": "bot.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/api/bot", "dest": "/bot.js?token=$BOT_TOKEN" },
-    { "src": "/api/getPoints", "dest": "/bot.js/getPoints" },
-    { "src": "/api/updatePoints", "dest": "/bot.js/updatePoints" },
+    { "src": "/api/bot", "dest": "/api/bot.js?token=$BOT_TOKEN" },
+    { "src": "/api/getPoints", "dest": "/api/bot.js/getPoints" },
+    { "src": "/api/updatePoints", "dest": "/api/bot.js/updatePoints" },
     { "src": "/api/(.*)", "headers": { "x-vercel-sso": "disable" } }
   ]
 }
