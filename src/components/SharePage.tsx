@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import bitcoinLogo from '../assets/Bearn.png';
 import eulerLogo from '../assets/euler.png';
-import WebApp from '@twa-dev/sdk';
 
 function SharePage({ userId }: { userId: string | null }) {
   const [referralLink, setReferralLink] = useState('');
@@ -29,14 +28,6 @@ function SharePage({ userId }: { userId: string | null }) {
       });
     } else {
       setError('Clipboard functionality not available in this environment.');
-    }
-  };
-
-  const showAlert = (message: string) => {
-    if (WebApp.isSupported('showAlert')) {
-      WebApp.showAlert(message);
-    } else {
-      setError(message);
     }
   };
 

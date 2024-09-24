@@ -1,7 +1,8 @@
 import bitcoinLogo from '../assets/Bearn.png';
 import eulerLogo from '../assets/euler.png';
 
-function BearnPage({ userId: _ }: { userId: string | null }) {
+function BearnPage({ userId }: { userId: string | null }) {
+    console.log('BearnPage userId: ', userId);
   return (
     <div className="page-container">
       <div className="logo-container">

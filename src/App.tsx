@@ -124,7 +124,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/points" element={<PointsPage userId={userId} />} />
-          <Route path="/bearn" element={<BearnPage />} />
+          <Route path="/bearn" element={<BearnPage userId={userId} />} />
           <Route path="/share" element={<SharePage userId={userId} />} />
         </Routes>
         <NavBar />
