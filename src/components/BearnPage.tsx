@@ -17,9 +17,7 @@ function BearnPage() {
           <div className="feature-item">🔒 Enhanced Security</div>
           <div className="feature-item">💡 Innovative Strategies</div>
         </div>
-        <div className="cta-container">
-          <button className="cta-button">Get Notified</button>
-        </div>
+        <button className="cta-button">Get Notified</button>
       </div>
     </div>
   );

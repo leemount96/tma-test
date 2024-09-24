@@ -60,7 +60,6 @@ function SharePage() {
         </div>
         <div className="share-benefits">
           <ul>
-            <li>🚀 Boost friends' Bitcoin earnings</li>
             <li>💰 Earn points for referrals</li>
             <li>🏆 Unlock exclusive rewards</li>
           </ul>
