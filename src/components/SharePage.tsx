@@ -23,10 +23,18 @@ function SharePage() {
   };
 
   return (
-    <div>
-      <img src={bitcoinLogo} alt="Bitcoin Logo" />
-      <img src={eulerLogo} alt="Euler Logo" />
-      <button onClick={copyReferralLink}>Copy Referral Link</button>
+    <div className="page-container">
+      <div className="logo-container">
+        <img src={bitcoinLogo} className="logo" alt="Bitcoin Logo" />
+        <span className="logo-plus">+</span>
+        <img src={eulerLogo} className="logo" alt="Euler Logo" />
+      </div>
+      <div className="page-content">
+        <div className="referral-link">
+          <input type="text" value={referralLink} readOnly />
+          <button onClick={copyReferralLink}>Copy Referral Link</button>
+        </div>
+      </div>
     </div>
   );
 }
