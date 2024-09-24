@@ -32,7 +32,7 @@ function NavBar() {
       <Link to="/share" className={location.pathname === '/share' ? 'active' : ''}>
         🔗 Share
       </Link>
-      <div className="nav-indicator" style={{ left: `${activeIndex * 25}%` }}></div>
+      <div className="nav-indicator" style={{ left: `calc(${activeIndex * 25}% + 40px)` }}></div>
     </nav>
   );
 }
@@ -40,17 +40,15 @@ function NavBar() {
 function HomePage() {
   return (
     <div className="page-container home-page">
-      <div className="page-content">
-        <div className="logo-container">
-          <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
-          <span className="logo-plus">+</span>
-          <img src={eulerLogo} className="logo" alt="Euler logo" />
-        </div>
-        <h1>Welcome to ₿earn</h1>
-        <Link to="/points" className="start-button">
-          Start to ₿earn Points
-        </Link>
+      <div className="logo-container">
+        <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
+        <span className="logo-plus">+</span>
+        <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
+      <h1>Welcome to ₿earn</h1>
+      <Link to="/points" className="start-button">
+        Start to ₿earn Points
+      </Link>
     </div>
   );
 }

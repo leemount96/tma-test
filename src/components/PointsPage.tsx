@@ -28,12 +28,18 @@ function PointsPage() {
           const docRef = doc(db, 'users', userId);
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
-            setCount(docSnap.data().points);
+            const points = docSnap.data().points;
+            setCount(points);
+            if (points === 0) {
+              const tooltipTimer = setTimeout(() => {
+                setShowTooltip(true);
+              }, 3000);
+              return () => clearTimeout(tooltipTimer);
+            }
           }
         }
       } catch (error) {
         console.error("Error fetching points:", error);
-        // Handle the error appropriately
       }
     };
     fetchPoints();
@@ -45,7 +51,7 @@ function PointsPage() {
     }
   };
 
-  const incrementCount = () => {
+  const incrementCount = (event: React.MouseEvent<HTMLDivElement>) => {
     setCount((prevCount) => {
       const newCount = prevCount + 1;
       savePoints(newCount);
@@ -54,16 +60,16 @@ function PointsPage() {
     setShowTooltip(false);
     const numBitcoins = 30;
 
-    if (containerRef.current && barrelRef.current) {
+    if (containerRef.current) {
       const containerRect = containerRef.current.getBoundingClientRect();
-      const barrelRect = barrelRef.current.getBoundingClientRect();
-
-      const centerX = barrelRect.left - containerRect.left + barrelRect.width / 2;
-      const centerY = barrelRect.top - containerRect.top + barrelRect.height / 2;
+      
+      // Calculate click position relative to the container
+      const clickX = event.clientX - containerRect.left;
+      const clickY = event.clientY - containerRect.top;
 
       for (let i = 0; i < numBitcoins; i++) {
         const angle = (i / numBitcoins) * Math.PI * 2;
-        createFloatingBitcoin(centerX, centerY, angle);
+        createFloatingBitcoin(clickX, clickY, angle);
       }
     }
   };
@@ -75,42 +81,43 @@ function PointsPage() {
     bitcoin.src = bitcoinLogo;
     bitcoin.className = 'floating-bitcoin';
 
-    const distance = 100 + Math.random() * 150; // Increased distance
+    const distance = 100 + Math.random() * 150;
     const endX = startX + Math.cos(angle) * distance;
     const endY = startY + Math.sin(angle) * distance;
 
-    bitcoin.style.left = `${startX}px`;
-    bitcoin.style.top = `${startY}px`;
     bitcoin.style.setProperty('--start-x', `${startX}px`);
     bitcoin.style.setProperty('--start-y', `${startY}px`);
     bitcoin.style.setProperty('--end-x', `${endX}px`);
     bitcoin.style.setProperty('--end-y', `${endY}px`);
 
+    // Position the bitcoin relative to the container
+    bitcoin.style.left = `${startX - 15}px`; // 15 is half the width of the bitcoin
+    bitcoin.style.top = `${startY - 15}px`; // 15 is half the height of the bitcoin
+
     containerRef.current.appendChild(bitcoin);
 
-    setTimeout(() => bitcoin.remove(), 1500); // Increased duration
+    setTimeout(() => bitcoin.remove(), 1500);
   };
 
   return (
-    <div className="page-container" ref={containerRef}>
+    <div className="page-container">
       <div className="logo-container">
         <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
         <span className="logo-plus">+</span>
         <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
-      <div className="page-content">
-        <div className="barrel-container">
+      <div className="content-container" ref={containerRef}>
+        <div className="barrel-container" onClick={incrementCount}>
           <img
             ref={barrelRef}
             src={oilBarrel}
             alt="Oil Barrel"
             className="oil-barrel"
-            onClick={incrementCount}
           />
           <Tooltip show={showTooltip} />
         </div>
         <div className="points-display">
-          <span className="points-label">Points:</span>
+          <span className="points-label">Points: </span>
           <span className="points-value">{count}</span>
         </div>
       </div>

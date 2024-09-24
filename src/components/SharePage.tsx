@@ -5,38 +5,51 @@ import eulerLogo from '../assets/euler.png';
 
 function SharePage() {
   const [referralLink, setReferralLink] = useState('');
+  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     const initData = WebApp.initData;
-    if (initData.user) {
-      const userId = initData.user.id;
-      // Generate the referral link using the bot's username and the user's ID
-      const botUsername = 'Bearn_Bot'; // Replace with your actual bot username if different
-      setReferralLink(`https://t.me/${botUsername}?start=ref_${userId}`);
+    let userId = 'unknown';
+
+    if (typeof initData === 'object' && initData.user && initData.user.id) {
+      userId = initData.user.id.toString();
+    } else {
+      console.error('User data not available in WebApp.initData');
     }
+    
+    // Generate a referral link using the user's ID
+    const baseUrl = 'https://t.me/Bearn_Bot'; // Replace with your bot's username
+    const generatedLink = `${baseUrl}?start=ref_${userId}`;
+    setReferralLink(generatedLink);
   }, []);
 
-  const copyReferralLink = () => {
+  const copyToClipboard = () => {
     navigator.clipboard.writeText(referralLink).then(() => {
-      // Remove the confirmation pop-up and prevent the app from closing
-      WebApp.showAlert('Referral link copied to clipboard!', { keepAppOpen: true });
-    }).catch(() => {
-      WebApp.showAlert('Failed to copy referral link.', { keepAppOpen: true });
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+    }, (err) => {
+      console.error('Could not copy text: ', err);
+      WebApp.showAlert('Failed to copy referral link.');
     });
   };
 
   return (
     <div className="page-container">
       <div className="logo-container">
-        <img src={bitcoinLogo} className="logo" alt="Bitcoin Logo" />
+        <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
         <span className="logo-plus">+</span>
-        <img src={eulerLogo} className="logo" alt="Euler Logo" />
+        <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
-      <div className="page-content">
-        <div className="referral-link">
-          <input type="text" value={referralLink} readOnly />
-          <button onClick={copyReferralLink}>Copy Referral Link</button>
-        </div>
+      <h2>Share ₿earn</h2>
+      <p>Share your referral link with friends:</p>
+      <div className="referral-link">
+        <input type="text" value={referralLink} readOnly />
+        <button 
+          onClick={copyToClipboard}
+          className={isCopied ? 'copied' : ''}
+        >
+          {isCopied ? 'Copied!' : 'Copy'}
+        </button>
       </div>
     </div>
   );

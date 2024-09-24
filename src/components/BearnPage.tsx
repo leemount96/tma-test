@@ -9,7 +9,7 @@ function BearnPage() {
         <span className="logo-plus">+</span>
         <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
-      <div className="page-content">
+      <div className="content-container">
         <div className="coming-soon-container">
           <h2 className="coming-soon">Coming Soon:</h2>
           <h3 className="coming-soon">Earning yield on bitcoin</h3>

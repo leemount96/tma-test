@@ -1,21 +1,8 @@
-#root {
+#root, body, html {
   width: 100%;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-}
-
-body, html {
-  margin: 0;
-  padding: 0;
   height: 100%;
-  width: 100%;
-  overflow: hidden;
-  background-color: white; /* Updated background color */
-  color: black; /* Updated text color */
+  margin: 0;
+  padding: 0;
 }
 
 .app-container {
@@ -23,308 +10,187 @@ body, html {
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
+  background: linear-gradient(to bottom left, 
+    rgba(19, 210, 162, 0.6) 0%, 
+    rgba(255, 255, 255, 1) 100%
+  );
+  overflow-y: auto;
 }
 
 .page-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-  padding-bottom: 70px; /* For the navigation bar */
-  box-sizing: border-box;
-}
-
-.page-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  padding: 1rem;
+  padding: 20px;
+  padding-bottom: 90px;
 }
 
 .logo-container {
-  margin-bottom: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
-}
-
-.logo {
-  height: 4em;  /* Reduced from 6em */
-  padding: 0.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #13D2A2aa); /* Updated hover color */
-}
-
-.logo-plus {
-  font-size: 2em;  /* Reduced from 3em */
-  margin: 0 0.5em;
-  color: #13D2A2; /* Updated color */
-}
-
-h1 {
-  font-size: 2.5em;
+  width: 100%;
   margin-bottom: 2rem;
 }
 
-.start-button {
-  display: inline-block;
-  width: 300px; /* Adjusted width */
-  height: 64px; /* Adjusted height */
-  gap: 0px; /* Updated gap */
-  border-radius: 32px; /* Updated border-radius to make it a full oval */
-  opacity: 1; /* Set opacity to 1 to make it visible */
-  font-size: 1.2em;
-  font-weight: 600;
-  color: #ffffff;
-  background-color: #13D2A2; /* Ensure button color is green */
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-  display: flex; /* Added flex display */
-  align-items: center; /* Centered text vertically */
-  justify-content: center; /* Centered text horizontally */
-  cursor: pointer; /* Show as clickable */
+.logo {
+  height: 4em;
+  padding: 0.5em;
 }
 
-.start-button:hover {
-  background-color: #11B08C; /* Slightly darker shade for hover */
+.logo-plus {
+  font-size: 2em;
+  margin: 0 0.5em;
+  color: white;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
 }
 
 .barrel-container {
   position: relative;
+  margin-bottom: 20px;
   display: inline-block;
-  margin-bottom: 2rem;
+  cursor: pointer;
+  width: 200px; /* Increase the container width */
+  height: 200px; /* Set a fixed height */
 }
 
 .oil-barrel {
-  width: 150px;
-  height: auto;
-  cursor: pointer;
-  transition: transform 0.1s ease-in-out;
-  animation: pulse 2s ease-in-out infinite;
+  width: 100%; /* Make the barrel fill its container */
+  height: 100%; /* Make the barrel fill its container */
+  object-fit: contain; /* Ensure the image maintains its aspect ratio */
+  display: block;
+  animation: pulse 2s infinite;
 }
 
-.oil-barrel:hover {
-  animation: none;
-  transform: scale(1.05);
-}
-
-.oil-barrel:active {
-  animation: none;
-  transform: scale(0.95);
-}
-
-.points-display {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #13D2A2; /* Updated color */
-}
-
-.points-label {
-  margin-right: 0.5rem;
-}
-
-.points-value {
-  color: #11B08C; /* Updated color */
-}
-
-.coming-soon {
-  font-size: 2em;
-  color: #13D2A2; /* Updated color */
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.bottom-nav {
-  display: flex;
-  justify-content: center; /* Changed from space-around to center */
-  align-items: center;
-  background-color: #f0f0f0;
-  padding: 5px 20px; /* Added horizontal padding */
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 70px;
-  overflow: hidden;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.bottom-nav a {
-  color: #13D2A2;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 15px 0;
-  flex: 0 1 auto; /* Changed from 1 to 0 1 auto */
-  text-align: center;
-  transition: color 0.3s ease;
-  position: relative;
-  z-index: 1;
-  margin: 0 10px; /* Added margin for spacing between buttons */
-}
-
-.bottom-nav a.active {
-  color: #ffffff;
-}
-
-.nav-indicator {
-  position: absolute;
-  bottom: 10px; /* Adjusted position */
-  height: 50px;
-  width: 22%; /* Slightly reduced width */
-  background-color: #13D2A2;
-  border-radius: 25px;
-  transition: left 0.3s ease;
-  z-index: 0;
-}
-
-/* ... (rest of the styles remain unchanged) ... */
-
-.home-page {
-  justify-content: center;
-}
-
-.home-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.home-content .logo-container {
-  margin-bottom: 1rem;
-}
-
-.home-content h1 {
-  margin-bottom: 1rem;
-}
-
-.home-content .start-button {
-  margin-top: 1rem;
-}
-
-@keyframes floatAway {
-  0% {
-    transform: translate(0, 0) scale(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(
-      calc(var(--end-x) - var(--start-x)),
-      calc(var(--end-y) - var(--start-y))
-    ) scale(1.5); /* Increased scale */
-    opacity: 0;
-  }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 .floating-bitcoin {
   position: absolute;
-  width: 30px; /* Increased size */
-  height: 30px; /* Increased size */
-  pointer-events: none;
-  animation: floatAway 1.5s ease-out forwards; /* Increased duration */
+  width: 30px;
+  height: 30px;
+  opacity: 0;
+  animation: float-up 1.5s ease-out;
+  pointer-events: none; /* Ensure the floating bitcoins don't interfere with clicks */
 }
 
-/* ... (rest of the styles remain unchanged) ... */
+@keyframes float-up {
+  0% {
+    transform: translate(var(--start-x), var(--start-y));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--end-x), var(--end-y));
+    opacity: 0;
+  }
+}
 
 .tooltip {
   position: absolute;
-  top: -60px;
+  bottom: 120%; /* Position above the barrel */
   left: 50%;
   transform: translateX(-50%);
-  background-color: #13D2A2; /* Updated background color */
+  background-color: #13D2A2; /* Match the green styling */
   color: white;
   padding: 10px 15px;
   border-radius: 20px;
-  font-size: 0.9em;
-  font-weight: bold;
-  white-space: nowrap;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  pointer-events: none;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #13D2A2 transparent transparent transparent;
 }
 
 .tooltip.show {
   opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
 }
 
-/* ... (rest of the styles remain unchanged) ... */
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
+.points-display {
+  font-size: 24px;
+  margin-top: 20px;
 }
 
-.referral-link {
+.bottom-nav {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  margin-top: 1rem;
-  width: 100%; /* Ensure the container takes full width */
-  max-width: 600px; /* Optional: limit the maximum width */
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 5px 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
 }
 
-.referral-link input {
-  flex: 1; /* Make the input take the remaining space */
-  padding: 0.5rem;
-  border: 1px solid #13D2A2; /* Updated border color */
-  border-radius: 4px 0 0 4px;
-  font-size: 0.9rem;
-  background-color: #f0f0f0; /* Updated background color */
-  color: #333; /* Updated text color */
-}
-
-.referral-link button {
-  padding: 0.5rem 1rem;
-  background-color: #13D2A2; /* Updated button color */
+.bottom-nav a {
   color: white;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s, transform 0.1s;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 15px 0;
+  flex: 1;
+  text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
-.referral-link button:hover {
-  background-color: #11B08C; /* Slightly darker shade for hover */
+.bottom-nav a.active {
+  color: white;
 }
 
-.referral-link button.copied {
-  background-color: #4CAF50;
-  transform: scale(1.05);
+.nav-indicator {
+  position: absolute;
+  bottom: 5px;
+  height: 60px;
+  width: 25%;
+  background-color: #13D2A2;
+  border-radius: 30px;
+  transition: left 0.3s ease;
+  z-index: 0;
 }
 
-/* ... (rest of the styles remain unchanged) ... */
-
-.home-content .logo {
-  height: 5em;  /* Increased from 4em */
-}
-
-.home-content .logo-plus {
-  font-size: 2.5em;  /* Increased from 2em */
-}
-
-.coming-soon-container {
-  display: flex;
-  flex-direction: column;
+.start-button {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  margin-top: 2rem;
+  width: 300px;
+  height: 64px;
+  border-radius: 32px;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: white;
+  background-color: #13D2A2;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  border: none;
 }
 
-.coming-soon {
-  font-size: 1.5em; /* Adjusted font size */
-  color: #13D2A2; /* Updated color */
-  margin: 0.5rem 0; /* Reduced margin */
+.start-button:hover {
+  background-color: #11B08C;
 }
