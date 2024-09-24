@@ -27,7 +27,9 @@ bot.telegram.setWebhook(webhookUrl)
   bot.command('start', async (ctx) => {
     console.log('Received start command');
     const startPayload = ctx.message.text.split(' ')[1];
-    const userId = ctx.from.id.toString(); // Extract user ID
+    const userId = ctx.from.id.toString();
+    console.log('User ID:', userId);
+    console.log('Start payload:', startPayload);
     let message = 'Welcome to ₿earn!';
     
     try {
@@ -37,10 +39,13 @@ bot.telegram.setWebhook(webhookUrl)
       if (!doc.exists) {
         await userRef.set({ points: 0 });
         console.log(`Created new user: ${userId}`);
+      } else {
+        console.log(`User ${userId} already exists`);
       }
   
       if (startPayload && startPayload.startsWith('ref_')) {
         const referrerId = startPayload.split('_')[1];
+        console.log('Referrer ID:', referrerId);
         message += ` You were referred by user ${referrerId}.`;
         // Here you would typically store this referral information and award points
         // For example:
@@ -48,17 +53,23 @@ bot.telegram.setWebhook(webhookUrl)
           const referrerDoc = await transaction.get(db.collection('users').doc(referrerId));
           if (referrerDoc.exists) {
             transaction.update(referrerDoc.ref, { points: referrerDoc.data().points + 100 });
+            console.log(`Updated referrer ${referrerId} points`);
+          } else {
+            console.log(`Referrer ${referrerId} not found`);
           }
         });
       }
   
-      ctx.reply(message + ' Click the button below to open the mini app:', {
-        reply_markup: {
-          inline_keyboard: [[
-            { text: "Open ₿earn App", web_app: { url: `https://leemount96.github.io/tma-test/?userId=${userId}` } }
-          ]]
-        }
-      });
+      const webAppUrl = `https://leemount96.github.io/tma-test/?userId=${encodeURIComponent(userId)}`;
+        const replyMarkup = {
+        inline_keyboard: [[
+            { text: "Open ₿earn App", web_app: { url: webAppUrl } }
+        ]]
+        };
+      console.log('Reply markup:', JSON.stringify(replyMarkup));
+  
+      await ctx.reply(message, { reply_markup: replyMarkup });
+      console.log('Reply sent successfully');
     } catch (error) {
       console.error('Error in start command:', error);
       ctx.reply('Sorry, there was an error. Please try again later.');
