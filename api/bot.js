@@ -24,26 +24,46 @@ bot.telegram.setWebhook(webhookUrl)
   .then(() => console.log('Webhook set successfully'))
   .catch((error) => console.error('Failed to set webhook:', error));
 
-bot.command('start', (ctx) => {
-  console.log('Received start command');
-  const startPayload = ctx.message.text.split(' ')[1];
-  const userId = ctx.from.id; // Extract user ID
-  let message = 'Welcome to ₿earn!';
+  bot.command('start', async (ctx) => {
+    console.log('Received start command');
+    const startPayload = ctx.message.text.split(' ')[1];
+    const userId = ctx.from.id.toString(); // Extract user ID
+    let message = 'Welcome to ₿earn!';
+    
+    try {
+      // Check if user exists, if not, create a new user with 0 points
+      const userRef = db.collection('users').doc(userId);
+      const doc = await userRef.get();
+      if (!doc.exists) {
+        await userRef.set({ points: 0 });
+        console.log(`Created new user: ${userId}`);
+      }
   
-  if (startPayload && startPayload.startsWith('ref_')) {
-    const referrerId = startPayload.split('_')[1];
-    message += ` You were referred by user ${referrerId}.`;
-    // Here you would typically store this referral information
-  }
-
-  ctx.reply(message + ' Click the button below to open the mini app:', {
-    reply_markup: {
-      inline_keyboard: [[
-        { text: "Open ₿earn App", web_app: { url: `https://leemount96.github.io/tma-test/?userId=${userId}` } }
-      ]]
+      if (startPayload && startPayload.startsWith('ref_')) {
+        const referrerId = startPayload.split('_')[1];
+        message += ` You were referred by user ${referrerId}.`;
+        // Here you would typically store this referral information and award points
+        // For example:
+        await db.runTransaction(async (transaction) => {
+          const referrerDoc = await transaction.get(db.collection('users').doc(referrerId));
+          if (referrerDoc.exists) {
+            transaction.update(referrerDoc.ref, { points: referrerDoc.data().points + 100 });
+          }
+        });
+      }
+  
+      ctx.reply(message + ' Click the button below to open the mini app:', {
+        reply_markup: {
+          inline_keyboard: [[
+            { text: "Open ₿earn App", web_app: { url: `https://leemount96.github.io/tma-test/?userId=${userId}` } }
+          ]]
+        }
+      });
+    } catch (error) {
+      console.error('Error in start command:', error);
+      ctx.reply('Sorry, there was an error. Please try again later.');
     }
   });
-});
 
 // Add a catch-all handler
 bot.on('message', (ctx) => {

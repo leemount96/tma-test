@@ -23,7 +23,7 @@ function PointsPage() {
     const fetchPoints = async () => {
         try {
           if (userId) {
-            const response = await fetch(`https://${process.env.VERCEL_URL}/api/getPoints?userId=${userId}`);
+            const response = await fetch(`https://first-tma-five.vercel.app/api/getPoints?userId=${userId}`);
             if (!response.ok) {
               throw new Error('Failed to fetch points');
             }
@@ -40,7 +40,7 @@ function PointsPage() {
   const savePoints = async (newCount: number) => {
     if (userId) {
       try {
-        const response = await fetch('https://your-vercel-url.vercel.app/api/updatePoints', {
+        const response = await fetch('https://first-tma-five.vercel.app/api/updatePoints', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
