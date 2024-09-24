@@ -143,44 +143,45 @@ h1 {
 
 .bottom-nav {
   display: flex;
-  justify-content: space-around;
+  justify-content: center; /* Changed from space-around to center */
   align-items: center;
-  background-color: #f0f0f0; /* Updated background color */
-  padding: 5px 0;
+  background-color: #f0f0f0;
+  padding: 5px 20px; /* Added horizontal padding */
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 70px; /* Increased height */
-  overflow: hidden; /* To hide the overflowing part of the indicator */
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Added shadow for better visual separation */
+  height: 70px;
+  overflow: hidden;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .bottom-nav a {
-  color: #13D2A2; /* Updated text color */
+  color: #13D2A2;
   text-decoration: none;
   font-weight: bold;
   padding: 15px 0;
-  flex: 1;
+  flex: 0 1 auto; /* Changed from 1 to 0 1 auto */
   text-align: center;
   transition: color 0.3s ease;
   position: relative;
   z-index: 1;
+  margin: 0 10px; /* Added margin for spacing between buttons */
 }
 
 .bottom-nav a.active {
-  color: #ffffff; /* Active text color */
+  color: #ffffff;
 }
 
 .nav-indicator {
   position: absolute;
-  bottom: 15px; /* Adjusted position to move up slightly */
-  height: 50px; /* Increased height */
-  width: 25%; /* Adjusted width */
-  background-color: #13D2A2; /* Updated background color */
-  border-radius: 25px; /* Oval shape */
+  bottom: 10px; /* Adjusted position */
+  height: 50px;
+  width: 22%; /* Slightly reduced width */
+  background-color: #13D2A2;
+  border-radius: 25px;
   transition: left 0.3s ease;
-  z-index: 0; /* Behind the text */
+  z-index: 0;
 }
 
 /* ... (rest of the styles remain unchanged) ... */
