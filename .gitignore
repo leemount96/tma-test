@@ -27,3 +27,5 @@ dist-ssr
 .vercel
 node_modules
 .pnpm-store
+
+serviceAccountKey.json

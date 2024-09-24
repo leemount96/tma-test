@@ -5,8 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -18,11 +17,12 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["vite/client", "@twa-dev/sdk", "react-router-dom"],
+    "types": ["vite/client", "react-router-dom", "node"],
     "paths": {
-      "react-router-dom": ["./node_modules/react-router-dom"]
+      "react-router-dom": ["./node_modules/react-router-dom"],
+      "@twa-dev/sdk": ["./types/twa-dev-sdk.d.ts"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "types"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
