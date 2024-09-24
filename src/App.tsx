@@ -77,7 +77,6 @@ function App() {
       try {
         console.log('Initializing WebApp...');
         
-        // Check if WebApp.ready is available
         if (typeof WebApp.ready === 'function') {
           await WebApp.ready();
           console.log('WebApp initialized successfully');
@@ -85,18 +84,35 @@ function App() {
           console.log('WebApp.ready() not available, continuing without initialization');
         }
         
-        // Get user ID from WebApp.initData or use a fallback
         if (WebApp.initData && typeof WebApp.initData === 'object') {
           const initData = WebApp.initData;
           if (initData.user && initData.user.id) {
-            setUserId(initData.user.id.toString());
+            const newUserId = initData.user.id.toString();
+            setUserId(newUserId);
+
+            // Check for referral
+            const urlParams = new URLSearchParams(window.location.search);
+            const referrerId = urlParams.get('ref');
+            if (referrerId) {
+              try {
+                const response = await fetch(`https://first-tma-five.vercel.app/api/checkReferral?userId=${newUserId}&referrerId=${referrerId}`);
+                const data = await response.json();
+                console.log('Referral check result:', data);
+                if (data.pointsAdded > 0) {
+                  // You can show a notification here if points were added
+                  console.log(`${data.pointsAdded} points added to referrer!`);
+                }
+              } catch (error) {
+                console.error('Error checking referral:', error);
+              }
+            }
           } else {
             console.warn('User data not available in WebApp.initData');
-            setUserId('demo_user'); // Use a demo user ID as fallback
+            setUserId('demo_user');
           }
         } else {
           console.warn('WebApp.initData not available');
-          setUserId('demo_user'); // Use a demo user ID as fallback
+          setUserId('demo_user');
         }
         
         setIsReady(true);

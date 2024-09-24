@@ -32,35 +32,44 @@ bot.command('start', async (ctx) => {
   console.log('Start payload:', startPayload);
   let message = 'Welcome to ₿earn!';
   
+  let referrerId = null;
+  if (startPayload && startPayload.startsWith('ref_')) {
+    referrerId = startPayload.slice(4);
+    console.log('Referrer ID:', referrerId);
+    message += ` You were referred by user ${referrerId}.`;
+    
+    // Add points to the referrer
+    try {
+      const referrerRef = db.collection('users').doc(referrerId);
+      await db.runTransaction(async (transaction) => {
+        const doc = await transaction.get(referrerRef);
+        if (doc.exists) {
+          const currentPoints = doc.data().points || 0;
+          transaction.update(referrerRef, { points: currentPoints + 100 });
+        }
+      });
+      console.log('Added 100 points to referrer');
+    } catch (error) {
+      console.error('Error adding points to referrer:', error);
+    }
+  }
+  
   try {
     // Check if user exists, if not, create a new user with 0 points
     const userRef = db.collection('users').doc(userId);
     const doc = await userRef.get();
     if (!doc.exists) {
-      await userRef.set({ points: 0 });
+      await userRef.set({ points: 0, referredBy: referrerId });
       console.log(`Created new user: ${userId}`);
     } else {
       console.log(`User ${userId} already exists`);
     }
 
-    if (startPayload && startPayload.startsWith('ref_')) {
-      const referrerId = startPayload.split('_')[1];
-      console.log('Referrer ID:', referrerId);
-      message += ` You were referred by user ${referrerId}.`;
-      // Here you would typically store this referral information and award points
-      // For example:
-      await db.runTransaction(async (transaction) => {
-        const referrerDoc = await transaction.get(db.collection('users').doc(referrerId));
-        if (referrerDoc.exists) {
-          transaction.update(referrerDoc.ref, { points: referrerDoc.data().points + 100 });
-          console.log(`Updated referrer ${referrerId} points`);
-        } else {
-          console.log(`Referrer ${referrerId} not found`);
-        }
-      });
+    let webAppUrl = `https://leemount96.github.io/tma-test/?userId=${encodeURIComponent(userId)}`;
+    if (referrerId) {
+      webAppUrl += `&ref=${encodeURIComponent(referrerId)}`;
     }
-
-    const webAppUrl = `https://leemount96.github.io/tma-test/?userId=${encodeURIComponent(userId)}`;
+    
     const replyMarkup = {
       inline_keyboard: [[
         { text: "Open ₿earn App", web_app: { url: webAppUrl } }
@@ -124,6 +133,41 @@ app.post('/api/updatePoints', async (req, res) => {
     res.status(200).json({ message: 'Points updated successfully' });
   } catch (error) {
     console.error('Error updating points:', error);
+    res.status(500).json({ error: 'Internal Server Error', details: error.message });
+  }
+});
+
+app.get('/api/checkReferral', async (req, res) => {
+  const { userId, referrerId } = req.query;
+  
+  if (!userId || !referrerId) {
+    return res.status(400).json({ error: 'userId and referrerId are required' });
+  }
+
+  try {
+    const userRef = db.collection('users').doc(userId);
+    const doc = await userRef.get();
+
+    if (!doc.exists) {
+      // New user, add points to referrer
+      const referrerRef = db.collection('users').doc(referrerId);
+      await db.runTransaction(async (transaction) => {
+        const referrerDoc = await transaction.get(referrerRef);
+        if (referrerDoc.exists) {
+          const currentPoints = referrerDoc.data().points || 0;
+          transaction.update(referrerRef, { points: currentPoints + 100 });
+        }
+      });
+
+      // Create new user document
+      await userRef.set({ points: 0, referredBy: referrerId });
+
+      res.status(200).json({ message: 'Referral successful', pointsAdded: 100 });
+    } else {
+      res.status(200).json({ message: 'User already exists', pointsAdded: 0 });
+    }
+  } catch (error) {
+    console.error('Error checking referral:', error);
     res.status(500).json({ error: 'Internal Server Error', details: error.message });
   }
 });
