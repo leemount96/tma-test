@@ -63,6 +63,12 @@ function PointsPage() {
     if (barrelRef.current) {
       const barrelRect = barrelRef.current.getBoundingClientRect();
       
+      // Add clicked class for bounce animation
+      barrelRef.current.classList.add('clicked');
+      setTimeout(() => {
+        barrelRef.current?.classList.remove('clicked');
+      }, 300);
+
       // Calculate click position relative to the barrel
       const clickX = event.clientX - barrelRect.left;
       const clickY = event.clientY - barrelRect.top;
@@ -118,6 +124,10 @@ function PointsPage() {
         <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
       <div className="content-container" ref={containerRef}>
+        <div className="points-display">
+          <span className="points-label">Points: </span>
+          <span className="points-value">{count}</span>
+        </div>
         <div className="barrel-container" onClick={incrementCount}>
           <img
             ref={barrelRef}
@@ -127,9 +137,9 @@ function PointsPage() {
           />
           <Tooltip show={showTooltip} />
         </div>
-        <div className="points-display">
-          <span className="points-label">Points: </span>
-          <span className="points-value">{count}</span>
+        <div className="points-info">
+          <p>Keep tapping to earn more points!</p>
+          <p>Unlock exciting rewards as you progress.</p>
         </div>
       </div>
     </div>

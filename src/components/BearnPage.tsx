@@ -10,16 +10,10 @@ function BearnPage() {
         <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
       <div className="content-container bearn-content">
-        <h2 className="coming-soon-title">Get Ready for Something Big!</h2>
-        <div className="coming-soon-container">
-          <h3 className="coming-soon-text">Coming Soon:</h3>
-          <h3 className="feature-text">Supercharged Bitcoin Yield</h3>
-          <p className="feature-description">
-            Earn like never before with our revolutionary approach to Bitcoin yield.
-          </p>
-        </div>
+        <h2 className="coming-soon-title">Coming Soon:</h2>
+        <h3 className="feature-text">Supercharged Bitcoin Yield</h3>
         <div className="feature-list">
-          <div className="feature-item">🚀 Boost Your Earnings</div>
+          <div className="feature-item">🚀 Boost Earnings</div>
           <div className="feature-item">🔒 Enhanced Security</div>
           <div className="feature-item">💡 Innovative Strategies</div>
         </div>
