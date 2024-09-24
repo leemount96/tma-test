@@ -138,8 +138,7 @@ function PointsPage() {
           <Tooltip show={showTooltip} />
         </div>
         <div className="points-info">
-          <p>Keep tapping to earn more points!</p>
-          <p>Unlock exciting rewards as you progress.</p>
+          <p>Tap to earn more! Unlock rewards as you progress.</p>
         </div>
       </div>
     </div>

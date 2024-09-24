@@ -44,7 +44,7 @@ function SharePage() {
       <div className="share-content">
         <h2 className="share-title">Spread the ₿earn Love!</h2>
         <div className="reward-info">
-          <h3>🎉 Earn 100 Points per Referral! 🎉</h3>
+          <h3>🎉 Earn 100 Points per Referral!</h3>
         </div>
         <div className="referral-link-container">
           <input type="text" value={referralLink} readOnly className="referral-input" />

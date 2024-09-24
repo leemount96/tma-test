@@ -23,8 +23,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 20px;
-  padding-bottom: 100px; /* Increase padding to account for navbar */
+  padding: 10px 20px 90px; /* Reduced top padding */
 }
 
 .logo-container {
@@ -32,12 +31,12 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem; /* Reduced margin */
 }
 
 .logo {
-  height: 4em;
-  padding: 0.5em;
+  height: 3em; /* Reduced logo size */
+  padding: 0.3em;
 }
 
 .logo-plus {
@@ -59,8 +58,8 @@
   margin-bottom: 20px;
   display: inline-block;
   cursor: pointer;
-  width: 200px;
-  height: 200px;
+  width: 180px; /* Slightly reduced barrel size */
+  height: 180px;
   animation: barrel-pulse 2s infinite;
 }
 
@@ -146,10 +145,10 @@
 }
 
 .points-display {
-  font-size: 40px;
-  margin-bottom: 20px;
+  font-size: 32px; /* Reduced font size */
+  margin-bottom: 10px; /* Reduced margin */
+  padding: 10px 20px; /* Reduced padding */
   background-color: rgba(255, 255, 255, 0.8);
-  padding: 15px 30px;
   border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -180,29 +179,29 @@
 }
 
 .points-info {
-  margin-top: 20px;
+  margin-top: 10px; /* Reduced margin */
   text-align: center;
   color: #333;
-  font-size: 18px;
+  font-size: 16px; /* Slightly reduced font size */
   max-width: 300px;
 }
 
 .points-info p {
-  margin: 10px 0;
+  margin: 5px 0; /* Reduced margin between paragraphs */
 }
 
 .barrel-container {
-  margin: 30px 0;
+  margin: 15px 0; /* Reduced margin */
   position: relative;
 }
 
 .barrel-container::after {
   content: '👆 Tap me!';
   position: absolute;
-  bottom: -30px;
+  bottom: -20px; /* Moved "Tap me!" text closer to the barrel */
   left: 50%;
   transform: translateX(-50%);
-  font-size: 18px;
+  font-size: 16px; /* Reduced font size */
   color: #0A8C6A;
   opacity: 0.8;
   animation: bounce 1s ease-in-out infinite;
@@ -500,4 +499,138 @@
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.05); }
+}
+
+/* Update these styles in your App.css file */
+
+.bearn-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 10px 0;
+}
+
+.coming-soon-title {
+  font-size: 1.8em;
+  color: #0A8C6A;
+  margin-bottom: 0.3rem;
+}
+
+.feature-text {
+  font-size: 1.5em;
+  color: #0A8C6A;
+  margin-bottom: 0.5rem;
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.feature-item {
+  font-size: 0.9em;
+  color: #1A1A1A;
+  background-color: rgba(19, 210, 162, 0.15);
+  padding: 0.3rem 0.5rem;
+  border-radius: 10px;
+}
+
+.cta-button {
+  background-color: #0A8C6A;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1em;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 0.8rem;
+}
+
+.cta-button:hover {
+  background-color: #077355;
+  transform: scale(1.05);
+}
+
+/* Update these styles in your App.css file */
+
+.share-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 10px 0;
+}
+
+.share-title {
+  font-size: 1.8em;
+  color: #0A8C6A;
+  margin-bottom: 0.5rem;
+}
+
+.reward-info {
+  background-color: rgba(19, 210, 162, 0.1);
+  padding: 0.5rem;
+  border-radius: 10px;
+  margin-bottom: 0.8rem;
+}
+
+.reward-info h3 {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.referral-link-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+}
+
+.referral-input {
+  flex-grow: 1;
+  padding: 8px;
+  font-size: 0.9em;
+  border: 2px solid #13D2A2;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+}
+
+.copy-button {
+  padding: 8px 15px;
+  font-size: 0.9em;
+  background-color: #13D2A2;
+  color: white;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.share-stats {
+  font-size: 1em;
+  color: #333;
+  margin-bottom: 0.8rem;
+}
+
+.share-benefits {
+  text-align: left;
+  background-color: rgba(19, 210, 162, 0.1);
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+
+.share-benefits ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.share-benefits li {
+  margin-bottom: 0.3rem;
+  font-size: 0.9em;
+  color: #333;
 }
