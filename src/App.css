@@ -10,6 +10,9 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
+h1, h2, h3 {
+  margin-bottom: 0.5rem; /* Reduced margin */
+}
 .some-class-that-needs-bold {
   font-weight: 700;
 }
@@ -28,33 +31,35 @@ h1, h2, h3, h4, h5, h6 {
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh; /* Use viewport height instead of min-height */
   width: 100%;
   background: linear-gradient(to bottom left, 
     rgba(19, 210, 162, 0.6) 0%, 
     rgba(255, 255, 255, 1) 100%
   );
-  overflow-y: auto;
+  overflow: hidden; /* Prevent scrolling */
 }
+
 
 .page-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* Changed from center to flex-start */
   align-items: center;
-  padding: 10px 20px 90px;
-  min-height: calc(100vh - 100px); /* Adjust for navbar height */
+  padding: 10px 20px 70px; /* Reduced bottom padding */
+  height: calc(100vh - 80px); /* Adjust for navbar height */
+  overflow-y: auto; /* Allow scrolling within pages if needed */
 }
 
 .content-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* Changed from center to flex-start */
   align-items: center;
-  flex-grow: 1;
   width: 100%;
   max-width: 600px;
+  height: 100%; /* Take full height of parent */
 }
 
 .points-content,
@@ -244,7 +249,7 @@ h1, h2, h3, h4, h5, h6 {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 80px;
+  height: 60px;
 }
 
 .bottom-nav a {
@@ -324,6 +329,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   max-width: 80%;
 }
+
 
 .home-logo {
   margin-bottom: 2rem;
@@ -408,10 +414,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .feature-item {
-  font-size: 1.2em;
+  font-size: 1em;
   color: #1A1A1A;
   background-color: rgba(19, 210, 162, 0.15);
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 20px;
   transition: transform 0.3s ease;
 }
@@ -491,6 +497,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: white;
   outline: none;
   color: black;
+  border-radius: 9999px 0 0 9999px; /* Round only the left corners */
 }
 
 .copy-button {
@@ -501,6 +508,7 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border-radius: 0 9999px 9999px 0; /* Round only the right corners */
 }
 
 .copy-button:hover {
