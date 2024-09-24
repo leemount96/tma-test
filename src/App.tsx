@@ -4,7 +4,7 @@ import WebApp from '@twa-dev/sdk';
 import PointsPage from './components/PointsPage';
 import BearnPage from './components/BearnPage';
 import SharePage from './components/SharePage';
-import bitcoinLogo from './assets/bitcoin.png';
+import bitcoinLogo from './assets/Bearn.png';
 import eulerLogo from './assets/euler.png';
 import './App.css';
 

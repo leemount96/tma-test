@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import WebApp from '@twa-dev/sdk';
-import bitcoinLogo from '../assets/bitcoin.png';
+import bitcoinLogo from '../assets/Bearn.png';
 import eulerLogo from '../assets/euler.png';
 
 function SharePage() {
