@@ -8,7 +8,7 @@ import { firebaseConfig } from './firebaseConfig';
 initializeApp(firebaseConfig);
 
 WebApp.ready();
-WebApp.expand(); // This will expand the mini app to full height
+WebApp.expand();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <App />

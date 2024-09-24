@@ -60,41 +60,52 @@ function PointsPage() {
     setShowTooltip(false);
     const numBitcoins = 30;
 
-    if (containerRef.current) {
-      const containerRect = containerRef.current.getBoundingClientRect();
+    if (barrelRef.current) {
+      const barrelRect = barrelRef.current.getBoundingClientRect();
       
-      // Calculate click position relative to the container
-      const clickX = event.clientX - containerRect.left;
-      const clickY = event.clientY - containerRect.top;
+      // Calculate click position relative to the barrel
+      const clickX = event.clientX - barrelRect.left;
+      const clickY = event.clientY - barrelRect.top;
+
+      console.log('Click position:', { clickX, clickY });
+      console.log('Barrel position:', { 
+        left: barrelRect.left,
+        top: barrelRect.top,
+        width: barrelRect.width,
+        height: barrelRect.height
+      });
 
       for (let i = 0; i < numBitcoins; i++) {
         const angle = (i / numBitcoins) * Math.PI * 2;
-        createFloatingBitcoin(clickX, clickY, angle);
+        createFloatingBitcoin(clickX, clickY, angle, barrelRect);
       }
     }
   };
 
-  const createFloatingBitcoin = (startX: number, startY: number, angle: number) => {
+  const createFloatingBitcoin = (startX: number, startY: number, angle: number, barrelRect: DOMRect) => {
     if (!containerRef.current) return;
 
     const bitcoin = document.createElement('img');
     bitcoin.src = bitcoinLogo;
     bitcoin.className = 'floating-bitcoin';
 
-    const distance = 100 + Math.random() * 150;
+    const distance = 100 + Math.random() * 150; // Reverted to original larger distance
     const endX = startX + Math.cos(angle) * distance;
     const endY = startY + Math.sin(angle) * distance;
 
     bitcoin.style.setProperty('--start-x', `${startX}px`);
     bitcoin.style.setProperty('--start-y', `${startY}px`);
-    bitcoin.style.setProperty('--end-x', `${endX}px`);
-    bitcoin.style.setProperty('--end-y', `${endY}px`);
+    bitcoin.style.setProperty('--end-x', `${endX - startX}px`);
+    bitcoin.style.setProperty('--end-y', `${endY - startY}px`);
 
-    // Position the bitcoin relative to the container
-    bitcoin.style.left = `${startX - 15}px`; // 15 is half the width of the bitcoin
-    bitcoin.style.top = `${startY - 15}px`; // 15 is half the height of the bitcoin
+    // Position the bitcoin relative to the viewport
+    bitcoin.style.position = 'fixed';
+    bitcoin.style.left = `${barrelRect.left + startX - 15}px`;
+    bitcoin.style.top = `${barrelRect.top + startY - 15}px`;
 
-    containerRef.current.appendChild(bitcoin);
+    document.body.appendChild(bitcoin);
+
+    console.log('Bitcoin position:', { startX, startY, endX, endY });
 
     setTimeout(() => bitcoin.remove(), 1500);
   };

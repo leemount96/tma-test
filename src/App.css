@@ -59,14 +59,14 @@
   margin-bottom: 20px;
   display: inline-block;
   cursor: pointer;
-  width: 200px; /* Increase the container width */
-  height: 200px; /* Set a fixed height */
+  width: 200px;
+  height: 200px;
 }
 
 .oil-barrel {
-  width: 100%; /* Make the barrel fill its container */
-  height: 100%; /* Make the barrel fill its container */
-  object-fit: contain; /* Ensure the image maintains its aspect ratio */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
   animation: pulse 2s infinite;
 }
@@ -83,12 +83,13 @@
   height: 30px;
   opacity: 0;
   animation: float-up 1.5s ease-out;
-  pointer-events: none; /* Ensure the floating bitcoins don't interfere with clicks */
+  pointer-events: none;
+  z-index: 10;
 }
 
 @keyframes float-up {
   0% {
-    transform: translate(var(--start-x), var(--start-y));
+    transform: translate(0, 0);
     opacity: 1;
   }
   100% {
@@ -149,27 +150,32 @@
 }
 
 .bottom-nav a {
-  color: white;
+  color: #13D2A2; /* Change default color to green */
   text-decoration: none;
   font-weight: bold;
-  padding: 15px 0;
+  padding: 10px 0;
   flex: 1;
   text-align: center;
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  transition: color 0.3s ease; /* Add transition for smooth color change */
 }
 
 .bottom-nav a.active {
-  color: white;
+  color: white; /* Change to white when active */
 }
 
 .nav-indicator {
   position: absolute;
-  bottom: 5px;
-  height: 60px;
+  height: 55px;
   width: 25%;
   background-color: #13D2A2;
-  border-radius: 30px;
+  border-radius: 27.5px;
   transition: left 0.3s ease;
   z-index: 0;
 }
@@ -193,4 +199,120 @@
 
 .start-button:hover {
   background-color: #11B08C;
+}
+
+/* Add these new styles at the end of your App.css file */
+
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-logo .logo {
+  height: 6em; /* Increase logo size for the home page */
+  padding: 0.5em;
+}
+
+.home-logo .logo-plus {
+  font-size: 3em; /* Increase plus sign size for the home page */
+}
+
+.home-page h1 {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Add these styles at the end of your App.css file */
+
+.bearn-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.coming-soon-title {
+  font-size: 2.5em;
+  color: #0A8C6A; /* Darker shade of green for better contrast */
+  margin-bottom: 1rem;
+  animation: pulse 2s infinite;
+}
+
+.coming-soon-text {
+  font-size: 1.8em;
+  color: #1A1A1A; /* Darker color for better readability */
+  margin-bottom: 0.5rem;
+}
+
+.feature-text {
+  font-size: 2.2em;
+  color: #0A8C6A; /* Darker shade of green for better contrast */
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.feature-description {
+  font-size: 1.2em;
+  color: #333; /* Darker color for better readability */
+  margin-bottom: 2rem;
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.feature-item {
+  font-size: 1.2em;
+  color: #1A1A1A; /* Darker color for better readability */
+  background-color: rgba(19, 210, 162, 0.15); /* Slightly more opaque background */
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+}
+
+.cta-container {
+  margin-top: 2rem;
+}
+
+.cta-button {
+  background-color: #0A8C6A; /* Darker shade of green for better contrast */
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.2em;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #077355; /* Even darker shade for hover state */
+  transform: scale(1.05);
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
 }
