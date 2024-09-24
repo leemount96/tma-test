@@ -1,3 +1,25 @@
+/* font-face declarations */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Rest of your CSS */
+
+body, html, button, input, select, textarea {
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+.some-class-that-needs-bold {
+  font-weight: 700;
+}
+
+.some-class-that-needs-light {
+  font-weight: 400;
+}
+
 #root, body, html {
   width: 100%;
   height: 100%;
