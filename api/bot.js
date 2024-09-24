@@ -67,7 +67,7 @@ app.get('/api/getPoints', async (req, res) => {
     const userId = req.query.userId;
     const userRef = db.collection('users').doc(userId);
     const doc = await userRef.get();
-    if (!doc.exists) {
+    if (!doc.exists()) {
       res.status(404).json({ error: 'User not found' });
     } else {
       res.status(200).json(doc.data());
