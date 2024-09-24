@@ -1,6 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
 import bitcoinLogo from '../assets/Bearn.png';
 import eulerLogo from '../assets/euler.png';
 import oilBarrel from '../assets/oil.png';
@@ -23,31 +21,38 @@ function PointsPage() {
 
   useEffect(() => {
     const fetchPoints = async () => {
-      try {
-        if (userId) {
-          const docRef = doc(db, 'users', userId);
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
-            const points = docSnap.data().points;
-            setCount(points);
-            if (points === 0) {
-              const tooltipTimer = setTimeout(() => {
-                setShowTooltip(true);
-              }, 3000);
-              return () => clearTimeout(tooltipTimer);
+        try {
+          if (userId) {
+            const response = await fetch(`https://${process.env.VERCEL_URL}/api/getPoints?userId=${userId}`);
+            if (!response.ok) {
+              throw new Error('Failed to fetch points');
             }
+            const data = await response.json();
+            setCount(data.points);
           }
+        } catch (error) {
+          console.error("Error fetching points:", error);
         }
-      } catch (error) {
-        console.error("Error fetching points:", error);
-      }
-    };
+      };
     fetchPoints();
   }, [userId]);
 
   const savePoints = async (newCount: number) => {
     if (userId) {
-      await setDoc(doc(db, 'users', userId), { points: newCount });
+      try {
+        const response = await fetch('https://your-vercel-url.vercel.app/api/updatePoints', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId, points: newCount }),
+        });
+        if (!response.ok) {
+          throw new Error('Failed to update points');
+        }
+      } catch (error) {
+        console.error("Error saving points:", error);
+      }
     }
   };
 
@@ -72,14 +77,6 @@ function PointsPage() {
       // Calculate click position relative to the barrel
       const clickX = event.clientX - barrelRect.left;
       const clickY = event.clientY - barrelRect.top;
-
-      console.log('Click position:', { clickX, clickY });
-      console.log('Barrel position:', { 
-        left: barrelRect.left,
-        top: barrelRect.top,
-        width: barrelRect.width,
-        height: barrelRect.height
-      });
 
       for (let i = 0; i < numBitcoins; i++) {
         const angle = (i / numBitcoins) * Math.PI * 2;
@@ -110,8 +107,6 @@ function PointsPage() {
     bitcoin.style.top = `${barrelRect.top + startY - 15}px`;
 
     document.body.appendChild(bitcoin);
-
-    console.log('Bitcoin position:', { startX, startY, endX, endY });
 
     setTimeout(() => bitcoin.remove(), 1500);
   };

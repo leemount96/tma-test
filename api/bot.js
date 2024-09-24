@@ -1,8 +1,11 @@
-const { Telegraf } = require('telegraf');
-const admin = require('firebase-admin');
 const express = require('express');
+const admin = require('firebase-admin');
+const { Telegraf } = require('telegraf');
+const cors = require('cors');
+
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // Decode the base64-encoded service account key
 const serviceAccount = JSON.parse(Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_KEY, 'base64').toString('utf8'));
@@ -13,6 +16,13 @@ admin.initializeApp({
 
 const db = admin.firestore();
 const bot = new Telegraf(process.env.BOT_TOKEN);
+
+const VERCEL_URL = process.env.VERCEL_URL || 'first-tma-five.vercel.app';
+const webhookUrl = `https://${VERCEL_URL}/api/bot`;
+
+bot.telegram.setWebhook(webhookUrl)
+  .then(() => console.log('Webhook set successfully'))
+  .catch((error) => console.error('Failed to set webhook:', error));
 
 bot.command('start', (ctx) => {
   console.log('Received start command');
@@ -63,32 +73,36 @@ app.post('/api/bot', async (req, res) => {
 
 // Add endpoints to read/write points
 app.get('/api/getPoints', async (req, res) => {
-  try {
-    const userId = req.query.userId;
-    const userRef = db.collection('users').doc(userId);
-    const doc = await userRef.get();
-    if (!doc.exists()) {
-      res.status(404).json({ error: 'User not found' });
-    } else {
+    try {
+      const userId = req.query.userId;
+      if (!userId) {
+        return res.status(400).json({ error: 'userId is required' });
+      }
+      const userRef = db.collection('users').doc(userId);
+      const doc = await userRef.get();
+      if (!doc.exists) {
+        return res.status(404).json({ error: 'User not found' });
+      }
       res.status(200).json(doc.data());
+    } catch (error) {
+      console.error('Error fetching points:', error);
+      res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
-  } catch (error) {
-    console.error('Error fetching points:', error);
-    res.status(500).json({ error: 'Internal Server Error', details: error.message });
-  }
-});
-
-app.post('/api/updatePoints', async (req, res) => {
-  try {
-    const userId = req.body.userId;
-    const points = req.body.points;
-    const userRef = db.collection('users').doc(userId);
-    await userRef.set({ points }, { merge: true });
-    res.status(200).end();
-  } catch (error) {
-    console.error('Error updating points:', error);
-    res.status(500).json({ error: 'Internal Server Error', details: error.message });
-  }
-});
+  });
+  
+  app.post('/api/updatePoints', async (req, res) => {
+    try {
+      const { userId, points } = req.body;
+      if (!userId || points === undefined) {
+        return res.status(400).json({ error: 'userId and points are required' });
+      }
+      const userRef = db.collection('users').doc(userId);
+      await userRef.set({ points }, { merge: true });
+      res.status(200).json({ message: 'Points updated successfully' });
+    } catch (error) {
+      console.error('Error updating points:', error);
+      res.status(500).json({ error: 'Internal Server Error', details: error.message });
+    }
+  });
 
 module.exports = app;
