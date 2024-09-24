@@ -75,14 +75,21 @@ h1 {
 
 .start-button {
   display: inline-block;
-  padding: 0.8em 1.6em;
+  width: 300px; /* Adjusted width */
+  height: 64px; /* Adjusted height */
+  gap: 0px; /* Updated gap */
+  border-radius: 32px; /* Updated border-radius to make it a full oval */
+  opacity: 1; /* Set opacity to 1 to make it visible */
   font-size: 1.2em;
   font-weight: 600;
   color: #ffffff;
-  background-color: #13D2A2; /* Updated button color */
-  border-radius: 8px;
+  background-color: #13D2A2; /* Ensure button color is green */
   text-decoration: none;
   transition: background-color 0.3s ease;
+  display: flex; /* Added flex display */
+  align-items: center; /* Centered text vertically */
+  justify-content: center; /* Centered text horizontally */
+  cursor: pointer; /* Show as clickable */
 }
 
 .start-button:hover {
@@ -138,18 +145,19 @@ h1 {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #13D2A2; /* Updated background color */
+  background-color: #f0f0f0; /* Updated background color */
   padding: 5px 0;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 70px; /* Increased height */
   overflow: hidden; /* To hide the overflowing part of the indicator */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Added shadow for better visual separation */
 }
 
 .bottom-nav a {
-  color: white;
+  color: #13D2A2; /* Updated text color */
   text-decoration: none;
   font-weight: bold;
   padding: 15px 0;
@@ -161,16 +169,18 @@ h1 {
 }
 
 .bottom-nav a.active {
-  color: #ffffff;
+  color: #ffffff; /* Active text color */
 }
 
 .nav-indicator {
   position: absolute;
-  bottom: 0;
-  height: 4px;
-  width: 25%;
-  background-color: #ffffff;
+  bottom: 15px; /* Adjusted position to move up slightly */
+  height: 50px; /* Increased height */
+  width: 25%; /* Adjusted width */
+  background-color: #13D2A2; /* Updated background color */
+  border-radius: 25px; /* Oval shape */
   transition: left 0.3s ease;
+  z-index: 0; /* Behind the text */
 }
 
 /* ... (rest of the styles remain unchanged) ... */
@@ -297,4 +307,19 @@ h1 {
 
 .home-content .logo-plus {
   font-size: 2.5em;  /* Increased from 2em */
+}
+
+.coming-soon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.coming-soon {
+  font-size: 1.5em; /* Adjusted font size */
+  color: #13D2A2; /* Updated color */
+  margin: 0.5rem 0; /* Reduced margin */
 }

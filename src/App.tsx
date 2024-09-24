@@ -20,10 +20,18 @@ function NavBar() {
 
   return (
     <nav className="bottom-nav">
-      <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
-      <Link to="/points" className={location.pathname === '/points' ? 'active' : ''}>Points</Link>
-      <Link to="/bearn" className={location.pathname === '/bearn' ? 'active' : ''}>Bearn</Link>
-      <Link to="/share" className={location.pathname === '/share' ? 'active' : ''}>Share</Link>
+      <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
+        🏠 Home
+      </Link>
+      <Link to="/points" className={location.pathname === '/points' ? 'active' : ''}>
+        ⭐ Points
+      </Link>
+      <Link to="/bearn" className={location.pathname === '/bearn' ? 'active' : ''}>
+        💰 Bearn
+      </Link>
+      <Link to="/share" className={location.pathname === '/share' ? 'active' : ''}>
+        🔗 Share
+      </Link>
       <div className="nav-indicator" style={{ left: `${activeIndex * 25}%` }}></div>
     </nav>
   );

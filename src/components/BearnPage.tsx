@@ -10,9 +10,11 @@ function BearnPage() {
         <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
       <div className="page-content">
-        <h2 className="coming-soon">Coming Soon:</h2>
-        <h3 className="coming-soon">Earning yield on bitcoin</h3>
-        <h3 className="coming-soon">is better than ever</h3>
+        <div className="coming-soon-container">
+          <h2 className="coming-soon">Coming Soon:</h2>
+          <h3 className="coming-soon">Earning yield on bitcoin</h3>
+          <h3 className="coming-soon">is better than ever</h3>
+        </div>
       </div>
     </div>
   );
