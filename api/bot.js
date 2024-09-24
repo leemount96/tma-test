@@ -105,4 +105,20 @@ app.get('/api/getPoints', async (req, res) => {
     }
   });
 
-module.exports = app;
+  module.exports = (req, res) => {
+    if (req.method === 'POST' && req.url.startsWith('/api/bot')) {
+      return app.post('/api/bot', async (req, res) => {
+        // ... (keep the existing POST handler code)
+      })(req, res);
+    } else if (req.method === 'GET' && req.url.startsWith('/api/getPoints')) {
+      return app.get('/api/getPoints', async (req, res) => {
+        // ... (keep the existing GET handler code)
+      })(req, res);
+    } else if (req.method === 'POST' && req.url.startsWith('/api/updatePoints')) {
+      return app.post('/api/updatePoints', async (req, res) => {
+        // ... (keep the existing POST handler code)
+      })(req, res);
+    } else {
+      res.status(404).send('Not Found');
+    }
+  };
