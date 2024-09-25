@@ -76,6 +76,7 @@ function App() {
     const initWebApp = async () => {
       try {
         console.log('Initializing WebApp...');
+        console.log('WebApp object:', WebApp);
         
         if (typeof WebApp.ready === 'function') {
           await WebApp.ready();
@@ -92,36 +93,21 @@ function App() {
         if (typeof initDataString === 'string') {
           try {
             initData = JSON.parse(decodeURIComponent(initDataString));
+            console.log('Parsed initData:', initData);
           } catch (parseError) {
             console.error('Error parsing initData string:', parseError);
           }
         } else if (typeof initDataString === 'object') {
           initData = initDataString;
+          console.log('initData is already an object:', initData);
         }
         
         if (initData && initData.user && initData.user.id) {
           const newUserId = initData.user.id.toString();
           console.log('Extracted user ID:', newUserId);
           setUserId(newUserId);
-
-          // Check for referral
-          const urlParams = new URLSearchParams(window.location.search);
-          const referrerId = urlParams.get('ref');
-          if (referrerId) {
-            try {
-              const response = await fetch(`https://first-tma-five.vercel.app/api/checkReferral?userId=${newUserId}&referrerId=${referrerId}`);
-              const data = await response.json();
-              console.log('Referral check result:', data);
-              if (data.pointsAdded > 0) {
-                console.log(`${data.pointsAdded} points added to referrer!`);
-                // You can show a notification here if points were added
-              }
-            } catch (error) {
-              console.error('Error checking referral:', error);
-            }
-          }
         } else {
-          console.warn('User ID not found in initData');
+          console.warn('User ID not found in initData, using demo_user');
           setUserId('demo_user');
         }
         
@@ -134,7 +120,6 @@ function App() {
 
     initWebApp();
   }, []);
-
 
   if (error) {
     return <div>Error: {error}</div>;
