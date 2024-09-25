@@ -84,34 +84,44 @@ function App() {
           console.log('WebApp.ready() not available, continuing without initialization');
         }
         
-        if (WebApp.initData && typeof WebApp.initData === 'object') {
-          const initData = WebApp.initData;
-          if (initData.user && initData.user.id) {
-            const newUserId = initData.user.id.toString();
-            setUserId(newUserId);
+        // Access initData
+        const initDataString = WebApp.initData;
+        console.log('Raw initData:', initDataString);
+        
+        let initData;
+        if (typeof initDataString === 'string') {
+          try {
+            initData = JSON.parse(decodeURIComponent(initDataString));
+          } catch (parseError) {
+            console.error('Error parsing initData string:', parseError);
+          }
+        } else if (typeof initDataString === 'object') {
+          initData = initDataString;
+        }
+        
+        if (initData && initData.user && initData.user.id) {
+          const newUserId = initData.user.id.toString();
+          console.log('Extracted user ID:', newUserId);
+          setUserId(newUserId);
 
-            // Check for referral
-            const urlParams = new URLSearchParams(window.location.search);
-            const referrerId = urlParams.get('ref');
-            if (referrerId) {
-              try {
-                const response = await fetch(`https://first-tma-five.vercel.app/api/checkReferral?userId=${newUserId}&referrerId=${referrerId}`);
-                const data = await response.json();
-                console.log('Referral check result:', data);
-                if (data.pointsAdded > 0) {
-                  // You can show a notification here if points were added
-                  console.log(`${data.pointsAdded} points added to referrer!`);
-                }
-              } catch (error) {
-                console.error('Error checking referral:', error);
+          // Check for referral
+          const urlParams = new URLSearchParams(window.location.search);
+          const referrerId = urlParams.get('ref');
+          if (referrerId) {
+            try {
+              const response = await fetch(`https://first-tma-five.vercel.app/api/checkReferral?userId=${newUserId}&referrerId=${referrerId}`);
+              const data = await response.json();
+              console.log('Referral check result:', data);
+              if (data.pointsAdded > 0) {
+                console.log(`${data.pointsAdded} points added to referrer!`);
+                // You can show a notification here if points were added
               }
+            } catch (error) {
+              console.error('Error checking referral:', error);
             }
-          } else {
-            console.warn('User data not available in WebApp.initData');
-            setUserId('demo_user');
           }
         } else {
-          console.warn('WebApp.initData not available');
+          console.warn('User ID not found in initData');
           setUserId('demo_user');
         }
         
@@ -124,6 +134,7 @@ function App() {
 
     initWebApp();
   }, []);
+
 
   if (error) {
     return <div>Error: {error}</div>;
