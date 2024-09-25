@@ -31,12 +31,12 @@ bot.telegram.setWebhook(webhookUrl)
     console.log('User ID:', userId);
     console.log('Start payload:', startPayload);
     
-    let message = "🚀 Welcome to ₿earn - Start to earn points and yield! 🎉\n\n";
+    let message = "🚀 Welcome to ₿earn - Start to earn points and yield on your Bitcoin! 🎉\n\n";
     message += "Here's what you can do:\n";
     message += "• Earn points daily 📅\n";
     message += "• Complete fun challenges 🎮\n";
     message += "• Refer friends for bonus points 🤝\n";
-    message += "• Coming soon: Earn points and yield on your Bitcoin 📚\n\n";
+    message += "• Coming soon: Earn boosted yields on your Bitcoin 📚\n\n";
     
     let referrerId = null;
     
