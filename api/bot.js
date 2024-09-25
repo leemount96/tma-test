@@ -30,72 +30,104 @@ bot.telegram.setWebhook(webhookUrl)
     const userId = ctx.from.id.toString();
     console.log('User ID:', userId);
     console.log('Start payload:', startPayload);
-    let message = 'Welcome to ₿earn!';
+    
+    let message = "🚀 Welcome to ₿earn - Start to earn points and yield! 🎉\n\n";
+    message += "Here's what you can do:\n";
+    message += "• Earn points daily 📅\n";
+    message += "• Complete fun challenges 🎮\n";
+    message += "• Refer friends for bonus points 🤝\n";
+    message += "• Coming soon: Earn points and yield on your Bitcoin 📚\n\n";
+    
+    let referrerId = null;
     
     if (startPayload && startPayload.startsWith('bearn_')) {
-      const referrerId = startPayload.slice(6); // Remove 'bearn_' prefix
+      referrerId = startPayload.slice(6); // Remove 'bearn_' prefix
       console.log('Referrer ID:', referrerId);
-      message += ` You were referred by a friend!`;
       
-      // Add points to both the referrer and the new user
-      try {
-        const referrerRef = db.collection('users').doc(referrerId);
-        const newUserRef = db.collection('users').doc(userId);
+      if (referrerId === userId) {
+        message += "Oops! You can't refer yourself. But don't worry, there are plenty of other ways to earn! 😉\n\n";
+      } else {
+        message += "🎈 Fantastic! You were referred by a friend!\n";
+        message += "We've already added 100 points to your account as a welcome bonus. 🎁\n\n";
         
-        await db.runTransaction(async (transaction) => {
-          const referrerDoc = await transaction.get(referrerRef);
-          const newUserDoc = await transaction.get(newUserRef);
+        // Add points to both the referrer and the new user
+        try {
+          const referrerRef = db.collection('users').doc(referrerId);
+          const newUserRef = db.collection('users').doc(userId);
           
-          if (referrerDoc.exists) {
-            const currentReferrerPoints = referrerDoc.data().points || 0;
-            transaction.update(referrerRef, { points: currentReferrerPoints + 100 });
-          }
+          await db.runTransaction(async (transaction) => {
+            const referrerDoc = await transaction.get(referrerRef);
+            const newUserDoc = await transaction.get(newUserRef);
+            
+            if (referrerDoc.exists) {
+              const currentReferrerPoints = referrerDoc.data().points || 0;
+              transaction.update(referrerRef, { points: currentReferrerPoints + 100 });
+              // Send message to referrer
+              bot.telegram.sendMessage(referrerId, "🎉 Great news! Someone used your referral link. You've earned 100 bonus points! Keep sharing and earning! 💪");
+            } else {
+              console.log(`Referrer ${referrerId} does not exist`);
+            }
+            
+            if (newUserDoc.exists) {
+              const userData = newUserDoc.data();
+              if (userData.referredBy) {
+                message += "It looks like you've already been referred before. No worries, there are still plenty of ways to earn points! 😊\n\n";
+              } else {
+                const currentNewUserPoints = userData.points || 0;
+                transaction.update(newUserRef, { 
+                  points: currentNewUserPoints + 100,
+                  referredBy: referrerId
+                });
+              }
+            } else {
+              // If the new user doesn't exist yet, create their document with 100 points
+              transaction.set(newUserRef, { points: 100, referredBy: referrerId });
+            }
+          });
           
-          if (newUserDoc.exists) {
-            const currentNewUserPoints = newUserDoc.data().points || 0;
-            transaction.update(newUserRef, { points: currentNewUserPoints + 100 });
-          } else {
-            // If the new user doesn't exist yet, create their document with 100 points
-            transaction.set(newUserRef, { points: 100, referredBy: referrerId });
-          }
-        });
-        
-        console.log('Added 100 points to both referrer and new user');
-      } catch (error) {
-        console.error('Error adding points:', error);
+          console.log('Referral process completed successfully');
+        } catch (error) {
+          console.error('Error in referral process:', error);
+          message += "Oops! There was a hiccup processing your referral. But don't worry, you can still start earning points right away!\n\n";
+        }
       }
     }
-  
-  try {
-    // Check if user exists, if not, create a new user with 0 points
-    const userRef = db.collection('users').doc(userId);
-    const doc = await userRef.get();
-    if (!doc.exists) {
-      await userRef.set({ points: 0, referredBy: referrerId });
-      console.log(`Created new user: ${userId}`);
-    } else {
-      console.log(`User ${userId} already exists`);
-    }
-
-    let webAppUrl = `https://leemount96.github.io/tma-test/?userId=${encodeURIComponent(userId)}`;
-    if (referrerId) {
-      webAppUrl += `&ref=${encodeURIComponent(referrerId)}`;
-    }
     
-    const replyMarkup = {
-      inline_keyboard: [[
-        { text: "Open ₿earn App", web_app: { url: webAppUrl } }
-      ]]
-    };
-    console.log('Reply markup:', JSON.stringify(replyMarkup));
-
-    await ctx.reply(message, { reply_markup: replyMarkup });
-    console.log('Reply sent successfully');
-  } catch (error) {
-    console.error('Error in start command:', error);
-    ctx.reply('Sorry, there was an error. Please try again later.');
-  }
-});
+    try {
+      // Check if user exists, if not, create a new user with 0 points
+      const userRef = db.collection('users').doc(userId);
+      const doc = await userRef.get();
+      if (!doc.exists) {
+        await userRef.set({ points: 0, referredBy: referrerId });
+        console.log(`Created new user: ${userId}`);
+        message += "🎉 Your ₿earn account is all set up and ready to go!\n\n";
+      } else {
+        console.log(`User ${userId} already exists`);
+        message += "Welcome back to ₿earn! Ready to continue your earning journey? 😎\n\n";
+      }
+  
+      let webAppUrl = `https://leemount96.github.io/tma-test/?userId=${encodeURIComponent(userId)}`;
+      if (referrerId) {
+        webAppUrl += `&ref=${encodeURIComponent(referrerId)}`;
+      }
+      
+      message += "🚀 Tap the button below to launch the ₿earn app and start your crypto-earning adventure!\n";
+      message += "Remember, the more you engage, the more you earn. Let's get started! 💪";
+  
+      const replyMarkup = {
+        inline_keyboard: [[
+          { text: "🚀 Launch ₿earn App", web_app: { url: webAppUrl } }
+        ]]
+      };
+      console.log('Reply markup:', JSON.stringify(replyMarkup));
+  
+      await ctx.reply(message, { reply_markup: replyMarkup, parse_mode: 'Markdown' });
+      console.log('Reply sent successfully');
+    } catch (error) {
+      console.error('Error in start command:', error);
+      ctx.reply('Oops! We encountered a small hiccup. Please try again in a moment. Our crypto elves are working on it! 🧝‍♂️🛠️');
+    }
+  });
 
 // Add a catch-all handler
 bot.on('message', (ctx) => {
