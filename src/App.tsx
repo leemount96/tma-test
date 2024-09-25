@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
-import WebApp from '@twa-dev/sdk';
 import PointsPage from './components/PointsPage';
 import BearnPage from './components/BearnPage';
 import SharePage from './components/SharePage';
@@ -67,6 +66,14 @@ function HomePage() {
   );
 }
 
+declare global {
+  interface Window {
+    Telegram: {
+      WebApp: any;
+    }
+  }
+}
+
 function App() {
   const [isReady, setIsReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -77,22 +84,49 @@ function App() {
       try {
         console.log('Initializing WebApp...');
         
-        if (typeof WebApp.ready === 'function') {
-          await WebApp.ready();
+        // Use the global Telegram.WebApp object instead of the SDK
+        const tgWebApp = window.Telegram.WebApp;
+        console.log('Telegram WebApp object:', tgWebApp);
+        
+        if (typeof tgWebApp.ready === 'function') {
+          tgWebApp.ready();
           console.log('WebApp initialized successfully');
         }
         
-        // Try to get userId from URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlUserId = urlParams.get('userId');
+        const initDataString = tgWebApp.initData;
+        console.log('WebApp.initData:', initDataString);
         
-        if (urlUserId) {
-          console.log('User ID from URL:', urlUserId);
-          setUserId(urlUserId);
+        if (initDataString) {
+          try {
+            // Parse the initData string
+            const searchParams = new URLSearchParams(initDataString);
+            const userString = searchParams.get('user');
+            
+            if (userString) {
+              const user = JSON.parse(userString);
+              if (user && user.id) {
+                const telegramUserId = user.id.toString();
+                console.log('Telegram User ID:', telegramUserId);
+                setUserId(telegramUserId);
+              } else {
+                console.warn('User ID not found in parsed user data, using demo_user');
+                setUserId('demo_user');
+              }
+            } else {
+              console.warn('User data not found in initData, using demo_user');
+              setUserId('demo_user');
+            }
+          } catch (parseError) {
+            console.error('Error parsing initData:', parseError);
+            setUserId('demo_user');
+          }
         } else {
-          console.warn('User ID not found in URL, using demo_user');
+          console.warn('WebApp.initData is empty or undefined, using demo_user');
           setUserId('demo_user');
         }
+        
+        // Log initDataUnsafe for debugging
+        console.log('WebApp.initDataUnsafe:', tgWebApp.initDataUnsafe);
         
         setIsReady(true);
       } catch (err) {
