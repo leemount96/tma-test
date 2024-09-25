@@ -8,17 +8,16 @@ function SharePage({ userId }: { userId: string | null }) {
     const [error, setError] = useState<string | null>(null);
   
     useEffect(() => {
-      console.log('SharePage userId:', userId);
-      if (userId) {
-        const baseUrl = 'https://t.me/Bearn_Bot';
-        const generatedLink = `${baseUrl}?start=ref_${userId}`;
-        console.log('Generated referral link:', generatedLink);
-        setReferralLink(generatedLink);
-      } else {
-        console.error('User ID not available. Unable to generate referral link.');
-        setError('User ID not available. Unable to generate referral link.');
-      }
-    }, [userId]);
+        if (userId) {
+          const baseUrl = 'https://t.me/Bearn_Bot';
+          const referralCode = `bearn_${userId}`;
+          const generatedLink = `${baseUrl}?start=${referralCode}`;
+          setReferralLink(generatedLink);
+        } else {
+          setError('User ID not available. Unable to generate referral link.');
+        }
+      }, [userId]);
+    
 
   const copyToClipboard = () => {
     if (navigator.clipboard) {

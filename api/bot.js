@@ -24,35 +24,47 @@ bot.telegram.setWebhook(webhookUrl)
   .then(() => console.log('Webhook set successfully'))
   .catch((error) => console.error('Failed to set webhook:', error));
 
-bot.command('start', async (ctx) => {
-  console.log('Received start command');
-  const startPayload = ctx.message.text.split(' ')[1];
-  const userId = ctx.from.id.toString();
-  console.log('User ID:', userId);
-  console.log('Start payload:', startPayload);
-  let message = 'Welcome to ₿earn!';
-  
-  let referrerId = null;
-  if (startPayload && startPayload.startsWith('ref_')) {
-    referrerId = startPayload.slice(4);
-    console.log('Referrer ID:', referrerId);
-    message += ` You were referred by user ${referrerId}.`;
+  bot.command('start', async (ctx) => {
+    console.log('Received start command');
+    const startPayload = ctx.message.text.split(' ')[1];
+    const userId = ctx.from.id.toString();
+    console.log('User ID:', userId);
+    console.log('Start payload:', startPayload);
+    let message = 'Welcome to ₿earn!';
     
-    // Add points to the referrer
-    try {
-      const referrerRef = db.collection('users').doc(referrerId);
-      await db.runTransaction(async (transaction) => {
-        const doc = await transaction.get(referrerRef);
-        if (doc.exists) {
-          const currentPoints = doc.data().points || 0;
-          transaction.update(referrerRef, { points: currentPoints + 100 });
-        }
-      });
-      console.log('Added 100 points to referrer');
-    } catch (error) {
-      console.error('Error adding points to referrer:', error);
+    if (startPayload && startPayload.startsWith('bearn_')) {
+      const referrerId = startPayload.slice(6); // Remove 'bearn_' prefix
+      console.log('Referrer ID:', referrerId);
+      message += ` You were referred by a friend!`;
+      
+      // Add points to both the referrer and the new user
+      try {
+        const referrerRef = db.collection('users').doc(referrerId);
+        const newUserRef = db.collection('users').doc(userId);
+        
+        await db.runTransaction(async (transaction) => {
+          const referrerDoc = await transaction.get(referrerRef);
+          const newUserDoc = await transaction.get(newUserRef);
+          
+          if (referrerDoc.exists) {
+            const currentReferrerPoints = referrerDoc.data().points || 0;
+            transaction.update(referrerRef, { points: currentReferrerPoints + 100 });
+          }
+          
+          if (newUserDoc.exists) {
+            const currentNewUserPoints = newUserDoc.data().points || 0;
+            transaction.update(newUserRef, { points: currentNewUserPoints + 100 });
+          } else {
+            // If the new user doesn't exist yet, create their document with 100 points
+            transaction.set(newUserRef, { points: 100, referredBy: referrerId });
+          }
+        });
+        
+        console.log('Added 100 points to both referrer and new user');
+      } catch (error) {
+        console.error('Error adding points:', error);
+      }
     }
-  }
   
   try {
     // Check if user exists, if not, create a new user with 0 points
