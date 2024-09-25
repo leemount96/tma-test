@@ -3,22 +3,22 @@ import bitcoinLogo from '../assets/Bearn.png';
 import eulerLogo from '../assets/euler.png';
 
 function SharePage({ userId }: { userId: string | null }) {
-  const [referralLink, setReferralLink] = useState('');
-  const [isCopied, setIsCopied] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log('SharePage userId:', userId);
-    if (userId) {
-      const baseUrl = 'https://t.me/Bearn_Bot';
-      const generatedLink = `${baseUrl}?start=ref_${userId}`;
-      console.log('Generated referral link:', generatedLink);
-      setReferralLink(generatedLink);
-    } else {
-      console.error('User ID not available. Unable to generate referral link.');
-      setError('User ID not available. Unable to generate referral link.');
-    }
-  }, [userId]);
+    const [referralLink, setReferralLink] = useState('');
+    const [isCopied, setIsCopied] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+  
+    useEffect(() => {
+      console.log('SharePage userId:', userId);
+      if (userId) {
+        const baseUrl = 'https://t.me/Bearn_Bot';
+        const generatedLink = `${baseUrl}?start=ref_${userId}`;
+        console.log('Generated referral link:', generatedLink);
+        setReferralLink(generatedLink);
+      } else {
+        console.error('User ID not available. Unable to generate referral link.');
+        setError('User ID not available. Unable to generate referral link.');
+      }
+    }, [userId]);
 
   const copyToClipboard = () => {
     if (navigator.clipboard) {

@@ -76,38 +76,21 @@ function App() {
     const initWebApp = async () => {
       try {
         console.log('Initializing WebApp...');
-        console.log('WebApp object:', WebApp);
         
         if (typeof WebApp.ready === 'function') {
           await WebApp.ready();
           console.log('WebApp initialized successfully');
-        } else {
-          console.log('WebApp.ready() not available, continuing without initialization');
         }
         
-        // Access initData
-        const initDataString = WebApp.initData;
-        console.log('Raw initData:', initDataString);
+        // Try to get userId from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlUserId = urlParams.get('userId');
         
-        let initData;
-        if (typeof initDataString === 'string') {
-          try {
-            initData = JSON.parse(decodeURIComponent(initDataString));
-            console.log('Parsed initData:', initData);
-          } catch (parseError) {
-            console.error('Error parsing initData string:', parseError);
-          }
-        } else if (typeof initDataString === 'object') {
-          initData = initDataString;
-          console.log('initData is already an object:', initData);
-        }
-        
-        if (initData && initData.user && initData.user.id) {
-          const newUserId = initData.user.id.toString();
-          console.log('Extracted user ID:', newUserId);
-          setUserId(newUserId);
+        if (urlUserId) {
+          console.log('User ID from URL:', urlUserId);
+          setUserId(urlUserId);
         } else {
-          console.warn('User ID not found in initData, using demo_user');
+          console.warn('User ID not found in URL, using demo_user');
           setUserId('demo_user');
         }
         
