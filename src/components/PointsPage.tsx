@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import bitcoinLogo from '../assets/Bearn.png';
-import eulerLogo from '../assets/euler.png';
+import bitcoinLogo from '../assets/bitcoin.png';
 import oilBarrel from '../assets/oil.png';
 
 function Tooltip({ show }: { show: boolean }) {
@@ -115,8 +114,6 @@ function Tooltip({ show }: { show: boolean }) {
     <div className="page-container">
       <div className="logo-container">
         <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
-        <span className="logo-plus">+</span>
-        <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
       <div className="content-container points-content" ref={containerRef}>
         <div className="points-display">

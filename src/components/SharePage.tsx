@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import bitcoinLogo from '../assets/Bearn.png';
-import eulerLogo from '../assets/euler.png';
+import bitcoinLogo from '../assets/bitcoin.png';
 
 function SharePage({ userId }: { userId: string | null }) {
     const [referralLink, setReferralLink] = useState('');
@@ -38,8 +37,6 @@ function SharePage({ userId }: { userId: string | null }) {
     <div className="page-container">
       <div className="logo-container">
         <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
-        <span className="logo-plus">+</span>
-        <img src={eulerLogo} className="logo" alt="Euler logo" />
       </div>
       <div className="content-container share-content">
         <h2 className="share-title">Invite Friends & Earn!</h2>

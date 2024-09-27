@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react
 import PointsPage from './components/PointsPage';
 import BearnPage from './components/BearnPage';
 import SharePage from './components/SharePage';
-import bitcoinLogo from './assets/Bearn.png';
-import eulerLogo from './assets/euler.png';
+import bitcoinLogo from './assets/bitcoin.png';
 import './App.css';
 
 function NavBar() {
@@ -48,8 +47,6 @@ function HomePage() {
       <div className="home-content">
         <div className="logo-container">
           <img src={bitcoinLogo} className="logo" alt="Bitcoin logo" />
-          <span className="logo-plus">+</span>
-          <img src={eulerLogo} className="logo" alt="Euler logo" />
         </div>
         <h1>Welcome to ₿earn</h1>
         <div className="home-features">
