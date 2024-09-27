@@ -7,9 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+.pnpm-store
+
+# Build outputs
 dist
 dist-ssr
+docs
 *.local
 
 # Editor directories and files
@@ -23,10 +28,14 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment and config files
 .env
 .vercel
-node_modules
-.pnpm-store
-
 serviceAccountKey.json
 serviceAccountKey.json.base64
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Vite
+vite.config.d.ts
