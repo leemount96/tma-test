@@ -31,13 +31,54 @@ h1, h2, h3 {
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Use viewport height instead of min-height */
+  height: 100vh;
   width: 100%;
-  background: linear-gradient(to bottom left, 
-    rgba(247, 147, 26, 0.6) 0%, 
-    rgba(255, 255, 255, 1) 100%
-  );
-  overflow: hidden; /* Prevent scrolling */
+  background: linear-gradient(135deg, #d6e4ff 0%, #f0d9ff 100%);
+  overflow: hidden;
+  position: relative;
+}
+
+.bitcoin-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.bitcoin-icon {
+  position: absolute;
+  opacity: 0.4;
+  animation: float 20s infinite linear;
+  color: #f7931a; /* Bitcoin orange */
+  text-shadow: 0 0 10px rgba(247, 147, 26, 0.3); /* Subtle glow effect */
+  font-size: 20px;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+  }
+}
+
+/* Ensure other content is above the background */
+.page-container, .bottom-nav {
+  position: relative;
+  z-index: 2;
+}
+
+/* Adjust text colors for better visibility on light background */
+body, html, button, input, select, textarea {
+  color: #333333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #f7931a; /* Bitcoin orange for headings */
 }
 
 

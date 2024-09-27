@@ -63,6 +63,30 @@ function HomePage() {
   );
 }
 
+const BitcoinBackground = () => {
+  useEffect(() => {
+    const container = document.querySelector('.bitcoin-background');
+    const iconCount = 20;
+
+    if (container) {
+      container.innerHTML = '';
+      for (let i = 0; i < iconCount; i++) {
+        const icon = document.createElement('div');
+        icon.classList.add('bitcoin-icon');
+        icon.innerHTML = '₿';
+        icon.style.left = `${Math.random() * 100}%`;
+        icon.style.top = `${Math.random() * 100}vh`; // Use vh units for full viewport height
+        icon.style.animationDuration = `${Math.random() * 20 + 10}s`; // Reduced max duration
+        icon.style.animationDelay = `${Math.random() * -20}s`; // Negative delay for immediate start
+        container.appendChild(icon);
+      }
+    }
+  }, []);
+
+  return <div className="bitcoin-background"></div>;
+};
+
+
 declare global {
   interface Window {
     Telegram: {
@@ -146,6 +170,7 @@ function App() {
   return (
     <Router basename="/tma-test">
       <div className="app-container">
+        <BitcoinBackground />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/points" element={<PointsPage userId={userId} />} />
